@@ -1,6 +1,5 @@
 import React from 'react';
 import Styled from 'styled-components';
-// import Down from '../../../graphics/sprites/down0.png';
 
 const Sprite = Styled.img`
   position: absolute;
@@ -22,8 +21,8 @@ class Player extends React.Component {
 
     this.state = {
       x: 40,
-      y: 0,
-      stepSize: 48,
+      y: 20,
+      stepSize: 36,
       direction: 'down',
       step: 0,
     }
@@ -70,7 +69,6 @@ class Player extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { step } = this.state;
-    console.log(step)
     if (step !== 0) {
       setTimeout(() => {
           this.setState({ step: (step + 1) % 9 });
