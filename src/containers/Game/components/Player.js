@@ -6,7 +6,7 @@ const Sprite = Styled.img`
   position: absolute;
   left: ${(props) => props.x}px;
   top: ${(props) => props.y}px;
-  transition: all 0.2s linear;
+  transition: all 0.4s linear;
 `;
 
 const keyMap = {
@@ -66,6 +66,16 @@ class Player extends React.Component {
     step = (step + 1) % 9;
 
     this.setState({ x: x, y: y, direction: direction, step: step });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { step } = this.state;
+    console.log(step)
+    if (step !== 0) {
+      setTimeout(() => {
+          this.setState({ step: (step + 1) % 9 });
+      }, 50);
+    }
   }
 
   render() {
