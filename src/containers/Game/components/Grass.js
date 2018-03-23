@@ -1,5 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
+import Flower from './Flower';
 
 const tileSize = 36;
 
@@ -61,6 +62,8 @@ class Grass extends React.Component {
           <Grass3D visible={this.props.depth} src={grassSource3D}/>
         </Grass3DContainer>
       );
+    } else if (type === 'grass_flower') {
+      tile = <Flower/>;
     }
 
     return (
