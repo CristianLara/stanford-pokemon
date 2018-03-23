@@ -6,14 +6,24 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      spritePosition: {x: 1, y: 1},
+    };
+
+    this.updatePosition = this.updatePosition.bind(this);
+  }
+
+  updatePosition(position) {
+    this.setState({ spritePosition: position })
   }
 
   render() {
+    const { spritePosition } = this.state;
+    
     return (
       <div>
-        <Player/>
-        <Map/>
+        <Player updatePosition={this.updatePosition}/>
+        <Map spritePosition={spritePosition}/>
       </div>
     );
   }

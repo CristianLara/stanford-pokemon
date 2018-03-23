@@ -17,6 +17,7 @@ const Grass3DContainer = Styled.span`
 const Grass3D = Styled.img`
   position: absolute;
   left: 0px;
+  visibility: ${(props) => props.visible ? 'visible' : 'hidden'};
   height: ${tileSize}px;
   width: ${tileSize}px;
   z-index: 20;
@@ -46,6 +47,10 @@ class Map extends React.Component {
     const { grassSize, grassGrid } = this.state;
     const height = window.innerHeight;
     const yGrass = Math.ceil(height / grassSize);
+
+    const x = this.props.spritePosition.x;
+    const y = this.props.spritePosition.y;
+
     for (var i = 0; i < yGrass; i++) {
       const width = window.innerWidth;
       const numGrass = Math.ceil(width / grassSize);
@@ -56,7 +61,12 @@ class Map extends React.Component {
         let tile = <Grass key={j} src={grassSource}/>;
         if (type === 'grass_tall') {
           const grassSource3D = require(`../../../graphics/tiles/${type}_3d.png`);
-          tile = <Grass3DContainer key={j} src={grassSource}><Grass src={grassSource}/><Grass3D src={grassSource3D}/></Grass3DContainer>
+          tile = (
+            <Grass3DContainer key={j} src={grassSource}>
+              <Grass src={grassSource}/>
+              <Grass3D visible={x === j && y === i} src={grassSource3D}/>
+            </Grass3DContainer>
+          );
         }
         grassRow.push(tile);
       }

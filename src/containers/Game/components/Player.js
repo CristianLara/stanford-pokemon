@@ -21,6 +21,7 @@ class Player extends React.Component {
     super(props);
 
     this.state = {
+      gridPosition: {x: 1, y: 1},
       x: 40,
       y: 20,
       stepSize: 36,
@@ -36,27 +37,31 @@ class Player extends React.Component {
   }
 
   walk(event) {
-    let { x, y, stepSize, direction, step } = this.state;
+    let { x, y, stepSize, direction, step, gridPosition } = this.state;
 
     switch(event.which) {
       case keyMap.left:
         event.preventDefault()
         x -= stepSize;
+        gridPosition.x -= 1;
         direction = 'left';
         break;
       case keyMap.up:
         event.preventDefault()
         y -= stepSize;
+        gridPosition.y -= 1;
         direction = 'up';
         break;
       case keyMap.right:
         event.preventDefault()
         x += stepSize;
+        gridPosition.x += 1;
         direction = 'right';
         break;
       case keyMap.down:
         event.preventDefault()
         y += stepSize;
+        gridPosition.y += 1;
         direction = 'down';
         break;
       default:
@@ -65,7 +70,8 @@ class Player extends React.Component {
 
     step = (step + 1) % 9;
 
-    this.setState({ x: x, y: y, direction: direction, step: step });
+    this.props.updatePosition(gridPosition);
+    this.setState({ x: x, y: y, direction: direction, step: step, gridPosition: gridPosition });
   }
 
   componentDidUpdate(prevProps, prevState) {
