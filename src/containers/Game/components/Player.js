@@ -1,11 +1,12 @@
 import React from 'react';
 import Styled from 'styled-components';
+import _ from 'underscore';
 
 const Sprite = Styled.img`
   position: absolute;
   left: ${(props) => props.x}px;
   top: ${(props) => props.y}px;
-  transition: all 0.4s linear;
+  transition: all 0.3s linear;
   z-index: 10;
 `;
 
@@ -33,7 +34,14 @@ class Player extends React.Component {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", this.walk, false);
+    document.addEventListener("keydown", _.throttle(this.walk, 200));
+    document.addEventListener("keydown", this.preventScroll);
+  }
+
+  preventScroll(event) {
+    if (Object.values(keyMap).includes(event.which)) {
+      event.preventDefault();
+    }
   }
 
   walk(event) {
@@ -41,25 +49,21 @@ class Player extends React.Component {
 
     switch(event.which) {
       case keyMap.left:
-        event.preventDefault()
         x -= stepSize;
         gridPosition.x -= 1;
         direction = 'left';
         break;
       case keyMap.up:
-        event.preventDefault()
         y -= stepSize;
         gridPosition.y -= 1;
         direction = 'up';
         break;
       case keyMap.right:
-        event.preventDefault()
         x += stepSize;
         gridPosition.x += 1;
         direction = 'right';
         break;
       case keyMap.down:
-        event.preventDefault()
         y += stepSize;
         gridPosition.y += 1;
         direction = 'down';
@@ -70,7 +74,7 @@ class Player extends React.Component {
 
     step = (step + 1) % 9;
 
-    this.props.updatePosition(gridPosition);
+    // this.props.updatePosition(gridPosition);
     this.setState({ x: x, y: y, direction: direction, step: step, gridPosition: gridPosition });
   }
 
@@ -79,7 +83,7 @@ class Player extends React.Component {
     if (step !== 0) {
       setTimeout(() => {
           this.setState({ step: (step + 1) % 9 });
-      }, 50);
+      }, 40);
     }
   }
 
