@@ -1,84 +1,44 @@
 import React from 'react';
 import Styled from 'styled-components';
+import Grass from './Grass';
 
 const tileSize = 36;
 
-const Grass = Styled.img`
-  height: ${tileSize}px;
-  width: ${tileSize}px;
-`;
-
-const Grass3DContainer = Styled.span`
-  position: relative;
-  height: ${tileSize}px;
-  width: ${tileSize}px;
-`;
-
-const Grass3D = Styled.img`
-  position: absolute;
-  left: 0px;
-  visibility: ${(props) => props.visible ? 'visible' : 'hidden'};
-  height: ${tileSize}px;
-  width: ${tileSize}px;
-  z-index: 20;
-`;
-
-const GrassRow = Styled.div`
+const Row = Styled.div`
   height: ${tileSize}px;
   width: max-content;
 `;
-
-const grassTypes = [
-  'grass1', 'grass2', 'grass3', 'grass4',
-  'grass_flower', 'grass_tall', 'grass_tree',
-]
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      grassSize: tileSize,
-      grassGrid: [],
+      grid: [],
     }
   }
 
   componentWillMount() {
-    const { grassSize, grassGrid } = this.state;
+    const { grid } = this.state;
     const height = window.innerHeight;
-    const yGrass = Math.ceil(height / grassSize);
+    const numTilesY = Math.ceil(height / tileSize);
 
-    const x = this.props.spritePosition.x;
-    const y = this.props.spritePosition.y;
-
-    for (var i = 0; i < yGrass; i++) {
+    for (var i = 0; i < numTilesY; i++) {
       const width = window.innerWidth;
-      const numGrass = Math.ceil(width / grassSize);
-      const grassRow = [];
-      for (var j = 0; j < numGrass; j++) {
-        const type = grassTypes[Math.floor(Math.random() * grassTypes.length)]
-        const grassSource = require(`../../../graphics/tiles/${type}.png`);
-        let tile = <Grass key={j} src={grassSource}/>;
-        if (type === 'grass_tall') {
-          const grassSource3D = require(`../../../graphics/tiles/${type}_3d.png`);
-          tile = (
-            <Grass3DContainer key={j} src={grassSource}>
-              <Grass src={grassSource}/>
-              <Grass3D visible={x === j && y === i} src={grassSource3D}/>
-            </Grass3DContainer>
-          );
-        }
-        grassRow.push(tile);
+      const numTilesX = Math.ceil(width / tileSize);
+      const row = [];
+      for (var j = 0; j < numTilesX; j++) {
+        row.push(<Grass key={j} depth/>);
       }
-      grassGrid.push(<GrassRow key={i}>{grassRow}</GrassRow>);
+      grid.push(<Row key={i}>{row}</Row>);
     }
-    this.setState({ grassGrid: grassGrid })
+    this.setState({ grid: grid })
   }
 
   render() {
-    const { grassGrid } = this.state;
+    const { grid } = this.state;
     return (
-      [grassGrid]
+      [grid]
     );
   }
 
