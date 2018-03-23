@@ -47,6 +47,10 @@ class Player extends React.Component {
   walk(event) {
     let { x, y, stepSize, direction, step, gridPosition } = this.state;
 
+    if (Object.values(keyMap).includes(event.which)) {
+      step = (step + 1) % 9;
+    }
+
     switch(event.which) {
       case keyMap.left:
         x -= stepSize;
@@ -71,8 +75,6 @@ class Player extends React.Component {
       default:
         break;
     }
-
-    step = (step + 1) % 9;
 
     this.props.updatePosition(gridPosition);
     this.setState({ x: x, y: y, direction: direction, step: step, gridPosition: gridPosition });
