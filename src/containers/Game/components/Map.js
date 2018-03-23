@@ -1,13 +1,29 @@
 import React from 'react';
 import Styled from 'styled-components';
 
+const tileSize = 36;
+
 const Grass = Styled.img`
-  height: 36px;
-  width: 36px;
+  height: ${tileSize}px;
+  width: ${tileSize}px;
+`;
+
+const Grass3DContainer = Styled.span`
+  position: relative;
+  height: ${tileSize}px;
+  width: ${tileSize}px;
+`;
+
+const Grass3D = Styled.img`
+  position: absolute;
+  left: 0px;
+  height: ${tileSize}px;
+  width: ${tileSize}px;
+  z-index: 20;
 `;
 
 const GrassRow = Styled.div`
-  height: 36px;
+  height: ${tileSize}px;
   width: max-content;
 `;
 
@@ -21,7 +37,7 @@ class Map extends React.Component {
     super(props);
 
     this.state = {
-      grassSize: 36,
+      grassSize: tileSize,
       grassGrid: [],
     }
   }
@@ -37,7 +53,12 @@ class Map extends React.Component {
       for (var j = 0; j < numGrass; j++) {
         const type = grassTypes[Math.floor(Math.random() * grassTypes.length)]
         const grassSource = require(`../../../graphics/tiles/${type}.png`);
-        grassRow.push(<Grass key={j} src={grassSource}/>);
+        let tile = <Grass key={j} src={grassSource}/>;
+        if (type === 'grass_tall') {
+          const grassSource3D = require(`../../../graphics/tiles/${type}_3d.png`);
+          tile = <Grass3DContainer key={j} src={grassSource}><Grass src={grassSource}/><Grass3D src={grassSource3D}/></Grass3DContainer>
+        }
+        grassRow.push(tile);
       }
       grassGrid.push(<GrassRow key={i}>{grassRow}</GrassRow>);
     }

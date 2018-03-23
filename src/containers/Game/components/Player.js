@@ -6,6 +6,7 @@ const Sprite = Styled.img`
   left: ${(props) => props.x}px;
   top: ${(props) => props.y}px;
   transition: all 0.4s linear;
+  z-index: 10;
 `;
 
 const keyMap = {
