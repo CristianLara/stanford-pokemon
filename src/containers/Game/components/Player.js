@@ -34,7 +34,7 @@ class Player extends React.Component {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", _.throttle(this.walk, 350));
+    document.addEventListener("keydown", _.throttle(this.walk, 200));
     document.addEventListener("keydown", this.preventScroll);
   }
 

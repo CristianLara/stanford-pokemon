@@ -37,7 +37,10 @@ class Grass extends React.Component {
       type: '',
       grassSource: require(`../../../graphics/tiles/grass1.png`),
       grassSource3D: undefined,
+      visible: false,
     }
+
+    this.setDepth = this.setDepth.bind(this);
   }
 
   componentWillMount() {
@@ -51,15 +54,19 @@ class Grass extends React.Component {
     this.setState({ type: type, grassSource: grassSource, grassSource3D: grassSource3D });
   }
 
+  setDepth(depth) {
+    this.setState({ visible: depth });
+  }
+
   render() {
-    const { type, grassSource, grassSource3D } = this.state;
+    const { type, grassSource, grassSource3D, visible } = this.state;
 
     let tile = <StyledGrass src={grassSource}/>;
     if (type === 'grass_tall') {
       tile = (
         <Grass3DContainer>
           <StyledGrass src={grassSource}/>
-          <Grass3D visible={this.props.depth} src={grassSource3D}/>
+          <Grass3D visible={visible} src={grassSource3D}/>
         </Grass3DContainer>
       );
     } else if (type === 'grass_flower') {

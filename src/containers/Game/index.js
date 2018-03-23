@@ -14,12 +14,12 @@ class Game extends React.Component {
   }
 
   updatePosition(position) {
-    this.setState({ spritePosition: position })
+    this.setState({ spritePosition: {x: position.x, y: position.y} })
   }
 
   render() {
     const { spritePosition } = this.state;
-    
+
     return (
       <div>
         <Player updatePosition={this.updatePosition}/>

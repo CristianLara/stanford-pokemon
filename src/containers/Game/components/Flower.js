@@ -32,7 +32,6 @@ class Flower extends React.Component {
   componentDidMount() {
     setInterval(() => {
         const { step } = this.state;
-        console.log(step)
         this.setState({ step: (step + 1) % 5 });
     }, 250, this);
   }
