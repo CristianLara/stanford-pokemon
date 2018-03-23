@@ -40,6 +40,7 @@ class Grass extends React.Component {
       visible: false,
     }
 
+    this.walkable = true;
     this.setDepth = this.setDepth.bind(this);
   }
 
@@ -49,6 +50,8 @@ class Grass extends React.Component {
     let grassSource3D = undefined;
     if (type === 'grass_tall') {
       grassSource3D = require(`../../../graphics/tiles/${type}_3d.png`);
+    } else if (type === 'grass_tree') {
+      this.walkable = false;
     }
 
     this.setState({ type: type, grassSource: grassSource, grassSource3D: grassSource3D });

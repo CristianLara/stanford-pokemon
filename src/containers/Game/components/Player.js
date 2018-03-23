@@ -46,6 +46,7 @@ class Player extends React.Component {
 
   walk(event) {
     let { x, y, stepSize, direction, step, gridPosition } = this.state;
+    const isValid = this.props.isValid;
 
     if (Object.values(keyMap).includes(event.which)) {
       step = (step + 1) % 9;
@@ -53,24 +54,32 @@ class Player extends React.Component {
 
     switch(event.which) {
       case keyMap.left:
-        x -= stepSize;
-        gridPosition.x -= 1;
         direction = 'left';
+        if (isValid(gridPosition.y, gridPosition.x-1)) {
+          x -= stepSize;
+          gridPosition.x -= 1;
+        }
         break;
       case keyMap.up:
-        y -= stepSize;
-        gridPosition.y -= 1;
         direction = 'up';
+        if (isValid(gridPosition.y-1, gridPosition.x)) {
+          y -= stepSize;
+          gridPosition.y -= 1;
+        }
         break;
       case keyMap.right:
-        x += stepSize;
-        gridPosition.x += 1;
         direction = 'right';
+        if (isValid(gridPosition.y, gridPosition.x+1)) {
+          x += stepSize;
+          gridPosition.x += 1;
+        }
         break;
       case keyMap.down:
-        y += stepSize;
-        gridPosition.y += 1;
         direction = 'down';
+        if (isValid(gridPosition.y+1, gridPosition.x)) {
+          y += stepSize;
+          gridPosition.y += 1;
+        }
         break;
       default:
         break;
