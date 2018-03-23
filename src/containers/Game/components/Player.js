@@ -34,7 +34,7 @@ class Player extends React.Component {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", _.throttle(this.walk, 200));
+    document.addEventListener("keydown", _.throttle(this.walk, 350));
     document.addEventListener("keydown", this.preventScroll);
   }
 
@@ -74,7 +74,7 @@ class Player extends React.Component {
 
     step = (step + 1) % 9;
 
-    // this.props.updatePosition(gridPosition);
+    this.props.updatePosition(gridPosition);
     this.setState({ x: x, y: y, direction: direction, step: step, gridPosition: gridPosition });
   }
 
