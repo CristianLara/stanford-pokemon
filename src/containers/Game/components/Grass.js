@@ -33,32 +33,38 @@ class Grass extends React.Component {
     super(props);
 
     this.state = {
-      grass: <StyledGrass/>,
+      type: '',
+      grassSource: require(`../../../graphics/tiles/grass1.png`),
+      grassSource3D: undefined,
     }
   }
 
   componentWillMount() {
     const type = grassTypes[Math.floor(Math.random() * grassTypes.length)]
     const grassSource = require(`../../../graphics/tiles/${type}.png`);
+    let grassSource3D = undefined;
+    if (type === 'grass_tall') {
+      grassSource3D = require(`../../../graphics/tiles/${type}_3d.png`);
+    }
+
+    this.setState({ type: type, grassSource: grassSource, grassSource3D: grassSource3D });
+  }
+
+  render() {
+    const { type, grassSource, grassSource3D } = this.state;
 
     let tile = <StyledGrass src={grassSource}/>;
     if (type === 'grass_tall') {
-      const grassSource3D = require(`../../../graphics/tiles/${type}_3d.png`);
       tile = (
-        <Grass3DContainer src={grassSource}>
+        <Grass3DContainer>
           <StyledGrass src={grassSource}/>
           <Grass3D visible={this.props.depth} src={grassSource3D}/>
         </Grass3DContainer>
       );
     }
-    
-    this.setState({ grass: tile })
-  }
 
-  render() {
-    const { grass } = this.state;
     return (
-      grass
+      tile
     );
   }
 

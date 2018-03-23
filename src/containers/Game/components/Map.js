@@ -14,29 +14,26 @@ class Map extends React.Component {
     super(props);
 
     this.state = {
-      grid: [],
     }
-  }
-
-  componentWillMount() {
-    const { grid } = this.state;
-    const height = window.innerHeight;
-    const numTilesY = Math.ceil(height / tileSize);
-
-    for (var i = 0; i < numTilesY; i++) {
-      const width = window.innerWidth;
-      const numTilesX = Math.ceil(width / tileSize);
-      const row = [];
-      for (var j = 0; j < numTilesX; j++) {
-        row.push(<Grass key={j} depth/>);
-      }
-      grid.push(<Row key={i}>{row}</Row>);
-    }
-    this.setState({ grid: grid })
   }
 
   render() {
-    const { grid } = this.state;
+    const grid = [];
+    const height = window.innerHeight;
+    const numTilesY = Math.ceil(height / tileSize);
+
+    const { x, y } = this.props.spritePosition;
+
+    for (var i = 0; i < numTilesY; i++) {
+      const width = window.innerWidth;
+      const numTilesX = Math.floor(width / tileSize);
+      const row = [];
+      for (var j = 0; j < numTilesX; j++) {
+        row.push(<Grass key={j} depth={x===j&&y===i}/>);
+      }
+      grid.push(<Row key={i}>{row}</Row>);
+    }
+    
     return (
       [grid]
     );
