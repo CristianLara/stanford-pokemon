@@ -26,7 +26,6 @@ const Grass3D = Styled.img`
 
 const grassTypes = [
   'grass1', 'grass2', 'grass3', 'grass4',
-  'grass_tall', 'grass_tree',
 ]
 
 class Grass extends React.Component {
