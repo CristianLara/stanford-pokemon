@@ -1,5 +1,6 @@
 import React from 'react';
-import Map from './components/Map'
+import RandomMap from './components/maps/RandomMap'
+import OvalMap from './components/maps/OvalMap'
 import Player from './components/Player'
 
 class Game extends React.Component {
@@ -7,6 +8,7 @@ class Game extends React.Component {
     super(props);
 
     this.state = {
+      map: OvalMap,
       spritePosition: {x: 1, y: 1},
     };
 
@@ -36,7 +38,7 @@ class Game extends React.Component {
     return (
       <div>
         <Player isValid={this.isValidPosition} updatePosition={this.updatePosition}/>
-        <Map
+        <this.state.map
           ref={ (instance) => this.map = instance }
           spritePosition={spritePosition}
         />

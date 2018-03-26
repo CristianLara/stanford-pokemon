@@ -15,11 +15,13 @@ class Flower extends React.Component {
     this.state = {
       step: 0,
     }
+
+    this.walkable = true;
   }
 
   render() {
     const { step } = this.state;
-    const flower = require(`../../../graphics/tiles/flowers${step}.png`);
+    const flower = require(`../../../../graphics/tiles/flowers${step}.png`);
     return (
       <StyledGrass src={flower}/>
     );

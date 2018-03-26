@@ -1,6 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
-import Grass from './Grass';
+import Random from '../tiles/Random';
 
 const tileSize = 36;
 
@@ -9,7 +9,7 @@ const Row = Styled.div`
   width: max-content;
 `;
 
-class Map extends React.Component {
+class RandomMap extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,6 +20,8 @@ class Map extends React.Component {
 
     this.grid = [];
     this.gridRefs = [];
+
+    this.updateTileDepth = this.updateTileDepth.bind(this);
   }
 
   componentWillMount() {
@@ -34,7 +36,7 @@ class Map extends React.Component {
       const refRow = [];
       for (var j = 0; j < numTilesX; j++) {
         row.push(
-          <Grass
+          <Random
             key={j}
             ref={ (instance) => refRow.push(instance) }
           />
@@ -46,6 +48,10 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.updateTileDepth(nextProps);
+  }
+
+  updateTileDepth(nextProps) {
     const { width, height } = this.state;
     const { x, y } = this.props.spritePosition;
     if ((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
@@ -67,4 +73,4 @@ class Map extends React.Component {
 
 }
 
-export default Map;
+export default RandomMap;

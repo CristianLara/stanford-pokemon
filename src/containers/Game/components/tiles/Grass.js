@@ -26,7 +26,7 @@ const Grass3D = Styled.img`
 
 const grassTypes = [
   'grass1', 'grass2', 'grass3', 'grass4',
-  'grass_flower', 'grass_tall', 'grass_tree',
+  'grass_tall', 'grass_tree',
 ]
 
 class Grass extends React.Component {
@@ -35,7 +35,7 @@ class Grass extends React.Component {
 
     this.state = {
       type: '',
-      grassSource: require(`../../../graphics/tiles/grass1.png`),
+      grassSource: require(`../../../../graphics/tiles/grass1.png`),
       grassSource3D: undefined,
       visible: false,
     }
@@ -46,10 +46,10 @@ class Grass extends React.Component {
 
   componentWillMount() {
     const type = grassTypes[Math.floor(Math.random() * grassTypes.length)]
-    const grassSource = require(`../../../graphics/tiles/${type}.png`);
+    const grassSource = require(`../../../../graphics/tiles/${type}.png`);
     let grassSource3D = undefined;
     if (type === 'grass_tall') {
-      grassSource3D = require(`../../../graphics/tiles/${type}_3d.png`);
+      grassSource3D = require(`../../../../graphics/tiles/${type}_3d.png`);
     } else if (type === 'grass_tree') {
       this.walkable = false;
     }

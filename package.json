@@ -19,6 +19,24 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "babel-plugin-module-resolver": "^3.1.0",
     "gh-pages": "^1.1.0"
+  },
+  "babel": {
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "root": [
+            "./src"
+          ],
+          "alias": {
+            "test": "./test",
+            "underscore": "lodash",
+            "graphics": "./graphics"
+          }
+        }
+      ]
+    ]
   }
 }
