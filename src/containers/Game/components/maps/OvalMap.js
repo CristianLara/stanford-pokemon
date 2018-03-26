@@ -27,14 +27,10 @@ class RandomMap extends React.Component {
     this.map = {}
 
     this.updateTileDepth = this.updateTileDepth.bind(this);
+    this.addMapFeatures = this.addMapFeatures.bind(this);
   }
 
-  componentWillMount() {
-    const { height, width } = this.state;
-    const numTilesY = Math.ceil(height / tileSize);
-    const numTilesX = Math.floor(width / tileSize);
-
-    // create S flower
+  addMapFeatures(numTilesY, numTilesX) {
     const middleX = Math.floor(numTilesX / 2);
     const middleY = Math.floor(numTilesY / 2);
     const flowerShape = [
@@ -62,24 +58,34 @@ class RandomMap extends React.Component {
         }
       }
     }
+  }
 
-    // fill in rest of map
-    for (let y2 = 0; y2 < numTilesY; y2++) {
-      if (!this.grid[y2]) this.grid[y2] = [];
-      if (!this.gridRefs[y2]) this.gridRefs[y2] = [];
+  fillInGrass(numTilesY, numTilesX) {
+    for (let y = 0; y < numTilesY; y++) {
+      if (!this.grid[y]) this.grid[y] = [];
+      if (!this.gridRefs[y]) this.gridRefs[y] = [];
 
-      for (let x2 = 0; x2 < numTilesX; x2++) {
-        if (!this.grid[y2][x2]) {
-          this.grid[y2][x2] = (
+      for (let x = 0; x < numTilesX; x++) {
+        if (!this.grid[y][x]) {
+          this.grid[y][x] = (
             <Grass
-              key={x2}
-              ref={ (instance) => this.gridRefs[y2][x2] = instance }
+              key={x}
+              ref={ (instance) => this.gridRefs[y][x] = instance }
             />
           );
         }
       }
-      this.grid[y2] = <Row key={y2}>{this.grid[y2]}</Row>
+      this.grid[y] = <Row key={y}>{this.grid[y]}</Row>
     }
+  }
+
+  componentWillMount() {
+    const { height, width } = this.state;
+    const numTilesY = Math.ceil(height / tileSize);
+    const numTilesX = Math.floor(width / tileSize);
+
+    this.addMapFeatures(numTilesY, numTilesX);
+    this.fillInGrass(numTilesY, numTilesX);
   }
 
   componentWillReceiveProps(nextProps) {
