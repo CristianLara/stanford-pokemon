@@ -1,43 +1,14 @@
-import React from 'react';
-import Styled from 'styled-components';
+import Tile from './Tile';
 
-const tileSize = 36;
-
-const StyledGrass = Styled.img`
-  height: ${tileSize}px;
-  width: ${tileSize}px;
-`;
-
-class Flower extends React.Component {
+class Flower extends Tile {
   constructor(props) {
     super(props);
 
-    this.state = {
-      step: 0,
-    }
-
+    this.type = 'flowers';
     this.walkable = true;
+    this.animated = true;
+    this.steps = 5;
   }
-
-  render() {
-    const { step } = this.state;
-    const flower = require(`../../../../graphics/tiles/flowers${step}.png`);
-    return (
-      <StyledGrass src={flower}/>
-    );
-  }
-
-  updateFlower() {
-
-  }
-
-  componentDidMount() {
-    setInterval(() => {
-        const { step } = this.state;
-        this.setState({ step: (step + 1) % 5 });
-    }, 250, this);
-  }
-
 }
 
 export default Flower;

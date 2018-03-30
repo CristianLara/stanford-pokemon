@@ -1,5 +1,5 @@
 import React from 'react';
-import RandomMap from './components/maps/RandomMap'
+// import RandomMap from './components/maps/RandomMap'
 import OvalMap from './components/maps/OvalMap'
 import Player from './components/Player'
 

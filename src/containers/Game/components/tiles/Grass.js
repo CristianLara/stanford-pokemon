@@ -1,6 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
-import Flower from './Flower';
+import Tile from './Tile';
 
 const tileSize = 36;
 
@@ -24,27 +24,27 @@ const Grass3D = Styled.img`
   z-index: 20;
 `;
 
-const grassTypes = [
-  'grass1', 'grass2', 'grass3', 'grass4',
-]
-
-class Grass extends React.Component {
+class Grass extends Tile {
   constructor(props) {
     super(props);
 
     this.state = {
       type: '',
-      grassSource: require(`../../../../graphics/tiles/grass1.png`),
+      grassSource: undefined,
       grassSource3D: undefined,
       visible: false,
     }
 
-    this.walkable = true;
+    this.depth = true;
+    this.tileTypes = [
+      'grass1', 'grass2', 'grass3', 'grass4',
+    ];
+
     this.setDepth = this.setDepth.bind(this);
   }
 
   componentWillMount() {
-    const type = grassTypes[Math.floor(Math.random() * grassTypes.length)]
+    const type = this.tileTypes[Math.floor(Math.random() * this.tileTypes.length)]
     const grassSource = require(`../../../../graphics/tiles/${type}.png`);
     let grassSource3D = undefined;
     if (type === 'grass_tall') {
@@ -71,8 +71,6 @@ class Grass extends React.Component {
           <Grass3D visible={visible} src={grassSource3D}/>
         </Grass3DContainer>
       );
-    } else if (type === 'grass_flower') {
-      tile = <Flower/>;
     }
 
     return (
