@@ -3,6 +3,7 @@ import Styled from 'styled-components';
 import Flower from '../tiles/Flower';
 import Grass from '../tiles/Grass';
 import Path from '../tiles/Path';
+import Tree from '../tiles/Tree';
 
 const tileSize = 36;
 
@@ -33,6 +34,7 @@ class RandomMap extends React.Component {
     this.addFlowers = this.addFlowers.bind(this);
     this.addPaths = this.addPaths.bind(this);
     this.addTrees = this.addTrees.bind(this);
+    this.addTree = this.addTree.bind(this);
   }
 
   addMapFeatures(numTilesY, numTilesX) {
@@ -84,6 +86,19 @@ class RandomMap extends React.Component {
     }
   }
 
+  getPositionLabelYTree(max, current) {
+    switch(current) {
+      case 0:
+        return 'top';
+      case max - 1:
+        return 'bottom';
+      case 1:
+        return 'mid_top';
+      default:
+        return 'mid_bottom';
+    }
+  }
+
   getPositionLabelX(max, current) {
     switch(current) {
       case 0:
@@ -111,6 +126,7 @@ class RandomMap extends React.Component {
       for (let x = 0; x < pathWidth; x++) {
         var xpos = this.getPositionLabelX(pathWidth, x);
         const position = `${ypos}_${xpos}`;
+        // add left path
         this.grid[startY + y][startX1 + x] = (
           <Path
             key={startX1 + x}
@@ -118,11 +134,36 @@ class RandomMap extends React.Component {
             ref={ (instance) => this.gridRefs[startY + y][startX1 + x] = instance }
           />
         );
+        // add right path
         this.grid[startY + y][startX2 + x] = (
           <Path
             key={startX2 + x}
             position={position}
-            ref={ (instance) => this.gridRefs[startY + y][startX2 + x] = instance }
+            ref={ (inst) => this.gridRefs[startY + y][startX2 + x] = inst }
+          />
+        );
+      }
+    }
+  }
+
+  addTree(startX, startY) {
+    const height = 4;
+    const width = 3;
+
+    for (let y = 0; y < height; y++) {
+      if (!this.grid[startY + y]) this.grid[startY + y] = [];
+      if (!this.gridRefs[startY + y]) this.gridRefs[startY + y] = [];
+      var ypos = this.getPositionLabelYTree(height, y);
+
+      for (let x = 0; x < width; x++) {
+        var xpos = this.getPositionLabelX(width, x);
+        const position = `${ypos}_${xpos}`;
+
+        this.grid[startY + y][startX + x] = (
+          <Tree
+            key={startX + x}
+            position={position}
+            ref={ (instance) => this.gridRefs[startY + y][startX + x] = instance }
           />
         );
       }
@@ -130,7 +171,14 @@ class RandomMap extends React.Component {
   }
 
   addTrees(numTilesY, numTilesX) {
+    const posY = [0, Math.floor(numTilesY/2)-4, numTilesY-1-4];
+    const posX = [0, numTilesX-3];
 
+    posY.forEach((y) => {
+      posX.forEach((x) => {
+        this.addTree(x, y);
+      });
+    });
   }
 
   fillInGrass(numTilesY, numTilesX) {
