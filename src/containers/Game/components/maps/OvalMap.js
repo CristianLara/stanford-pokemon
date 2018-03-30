@@ -113,7 +113,7 @@ class OvalMap extends Map {
   }
 
   addTrees(numTilesY, numTilesX) {
-    const posY = [0, Math.floor(numTilesY/2)-4, numTilesY-1-4];
+    const posY = [0, Math.floor(numTilesY/2)-2, numTilesY-1-4];
     const posX = [0, numTilesX-3];
 
     posY.forEach((y) => {
