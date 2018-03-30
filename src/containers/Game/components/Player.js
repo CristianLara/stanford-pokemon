@@ -22,9 +22,7 @@ class Player extends React.Component {
     super(props);
 
     this.state = {
-      gridPosition: {x: 1, y: 1},
-      x: 40,
-      y: 20,
+      gridPosition: {x: 3, y: 3},
       stepSize: 36,
       direction: 'down',
       step: 0,
@@ -45,7 +43,7 @@ class Player extends React.Component {
   }
 
   walk(event) {
-    let { x, y, stepSize, direction, step, gridPosition } = this.state;
+    let { direction, step, gridPosition } = this.state;
     const isValid = this.props.isValid;
 
     if (Object.values(keyMap).includes(event.which)) {
@@ -56,28 +54,24 @@ class Player extends React.Component {
       case keyMap.left:
         direction = 'left';
         if (isValid(gridPosition.y, gridPosition.x-1)) {
-          x -= stepSize;
           gridPosition.x -= 1;
         }
         break;
       case keyMap.up:
         direction = 'up';
         if (isValid(gridPosition.y-1, gridPosition.x)) {
-          y -= stepSize;
           gridPosition.y -= 1;
         }
         break;
       case keyMap.right:
         direction = 'right';
         if (isValid(gridPosition.y, gridPosition.x+1)) {
-          x += stepSize;
           gridPosition.x += 1;
         }
         break;
       case keyMap.down:
         direction = 'down';
         if (isValid(gridPosition.y+1, gridPosition.x)) {
-          y += stepSize;
           gridPosition.y += 1;
         }
         break;
@@ -86,7 +80,7 @@ class Player extends React.Component {
     }
 
     this.props.updatePosition(gridPosition);
-    this.setState({ x: x, y: y, direction: direction, step: step, gridPosition: gridPosition });
+    this.setState({ direction: direction, step: step, gridPosition: gridPosition });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -99,8 +93,10 @@ class Player extends React.Component {
   }
 
   render() {
-    const { x, y, direction, step } = this.state;
+    const { direction, step, stepSize, gridPosition } = this.state;
     const spriteSource = require(`../../../graphics/sprites/${direction}${step}.png`);
+    const x = 4 + gridPosition.x * stepSize;
+    const y = -16 + gridPosition.y * stepSize;
     return (
       <Sprite src={spriteSource} x={x} y={y}></Sprite>
     );
