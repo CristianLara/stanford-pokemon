@@ -1,35 +1,12 @@
 import React from 'react';
-import Styled from 'styled-components';
 import Flower from '../tiles/Flower';
-import Grass from '../tiles/Grass';
 import Path from '../tiles/Path';
 import Tree from '../tiles/Tree';
+import Map from './Map';
 
-const tileSize = 36;
-
-const Row = Styled.div`
-  height: ${tileSize}px;
-  width: max-content;
-`;
-
-class RandomMap extends React.Component {
+class OvalMap extends Map {
   constructor(props) {
     super(props);
-
-    const height = window.innerHeight;
-    const width = window.innerWidth;
-
-    this.state = {
-      height: height,
-      width: width,
-    }
-
-    this.grid = [];
-    this.gridRefs = [];
-    this.map = {}
-
-    this.updateTileDepth = this.updateTileDepth.bind(this);
-    this.addMapFeatures = this.addMapFeatures.bind(this);
 
     this.addFlowers = this.addFlowers.bind(this);
     this.addPaths = this.addPaths.bind(this);
@@ -72,41 +49,6 @@ class RandomMap extends React.Component {
           );
         }
       }
-    }
-  }
-
-  getPositionLabelY(max, current) {
-    switch(current) {
-      case 0:
-        return 'top';
-      case max - 1:
-        return 'bottom';
-      default:
-        return 'mid';
-    }
-  }
-
-  getPositionLabelYTree(max, current) {
-    switch(current) {
-      case 0:
-        return 'top';
-      case max - 1:
-        return 'bottom';
-      case 1:
-        return 'mid_top';
-      default:
-        return 'mid_bottom';
-    }
-  }
-
-  getPositionLabelX(max, current) {
-    switch(current) {
-      case 0:
-        return 'left';
-      case max - 1:
-        return 'right';
-      default:
-        return 'mid';
     }
   }
 
@@ -153,7 +95,7 @@ class RandomMap extends React.Component {
     for (let y = 0; y < height; y++) {
       if (!this.grid[startY + y]) this.grid[startY + y] = [];
       if (!this.gridRefs[startY + y]) this.gridRefs[startY + y] = [];
-      var ypos = this.getPositionLabelYTree(height, y);
+      var ypos = this.getPositionLabelYTall(height, y);
 
       for (let x = 0; x < width; x++) {
         var xpos = this.getPositionLabelX(width, x);
@@ -181,62 +123,6 @@ class RandomMap extends React.Component {
     });
   }
 
-  fillInGrass(numTilesY, numTilesX) {
-    for (let y = 0; y < numTilesY; y++) {
-      if (!this.grid[y]) this.grid[y] = [];
-      if (!this.gridRefs[y]) this.gridRefs[y] = [];
-
-      for (let x = 0; x < numTilesX; x++) {
-        if (!this.grid[y][x]) {
-          this.grid[y][x] = (
-            <Grass
-              key={x}
-              ref={ (instance) => this.gridRefs[y][x] = instance }
-            />
-          );
-        }
-      }
-      this.grid[y] = <Row key={y}>{this.grid[y]}</Row>
-    }
-  }
-
-  componentWillMount() {
-    const { height, width } = this.state;
-    const numTilesY = Math.ceil(height / tileSize);
-    const numTilesX = Math.floor(width / tileSize);
-
-    this.addMapFeatures(numTilesY, numTilesX);
-    this.fillInGrass(numTilesY, numTilesX);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.updateTileDepth(nextProps);
-  }
-
-  updateTileDepth(nextProps) {
-    const { width, height } = this.state;
-    const { x, y } = this.props.spritePosition;
-    if ((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
-      if (this.gridRefs[y][x] && this.gridRefs[y][x].setDepth) {
-        this.gridRefs[y][x].setDepth(false);
-      }
-    }
-
-    const nextX = nextProps.spritePosition.x;
-    const nextY = nextProps.spritePosition.y;
-    if ((0 <= nextX) && (nextX < width) && (0 <= nextY) && (nextY < height)) {
-      if (this.gridRefs[nextY][nextX] && this.gridRefs[nextY][nextX].setDepth) {
-        this.gridRefs[nextY][nextX].setDepth(true);
-      }
-    }
-  }
-
-  render() {
-    return (
-      [this.grid]
-    );
-  }
-
 }
 
-export default RandomMap;
+export default OvalMap;
