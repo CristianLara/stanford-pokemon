@@ -43,7 +43,7 @@ class Map extends React.Component {
   }
 
   getPositionLabelY(tile, max, current) {
-    if (tile.height === 3) {
+    if (tile.height === 2 || tile.height === 3) {
       switch(current) {
         case 0:
           return 'top';
@@ -69,7 +69,7 @@ class Map extends React.Component {
   }
 
   getPositionLabelX(tile, max, current) {
-    if (tile.width === 3) {
+    if (tile.width === 2 || tile.width === 3) {
       switch(current) {
         case 0:
           return 'left';
@@ -137,6 +137,10 @@ class Map extends React.Component {
             Tile.width === 3 && Tile.height === 3) {
           // there is already a path in this spot, use bi-directional tile
           position = 'mid_mid';
+        } else if (xpos === '') {
+          position = ypos;
+        } else if (ypos === '') {
+          position = xpos;
         }
         this.grid[startY + y][startX + x] = (
           <Tile
