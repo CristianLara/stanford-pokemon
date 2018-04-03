@@ -23,10 +23,38 @@ class Map extends React.Component {
     `;
 
     this.updateTileDepth = this.updateTileDepth.bind(this);
+    this.transport = this.transport.bind(this);
     this.addMapFeatures = this.addMapFeatures.bind(this);
     this.fillInGrass = this.fillInGrass.bind(this);
     this.addTile = this.addTile.bind(this);
     this.addShape = this.addShape.bind(this);
+  }
+
+  detectEdge(position) {
+    switch(position.x) {
+      case 0:
+        return { edge: 'left', newPosition: {x: this.numTilesX-1, y: Math.floor(this.numTilesY/2)} };
+      case this.numTilesX - 1:
+        return { edge: 'right', newPosition: {x: 0, y: Math.floor(this.numTilesY/2)} };
+      default:
+        break;
+    }
+    switch(position.y) {
+      case 0:
+        return { edge: 'up', newPosition: {x: Math.floor(this.numTilesX/2), y: this.numTilesY-1} };
+      case this.numTilesY - 1:
+        return { edge: 'down', newPosition: {x: Math.floor(this.numTilesX/2), y: 0} };
+      default:
+        break;
+    }
+    return {};
+  }
+
+  transport(position) {
+    const { edge, newPosition } = this.detectEdge(position);
+    if (edge && (edge in this.transitions)) {
+      this.props.updateMap(this.transitions[edge], newPosition);
+    }
   }
 
   componentWillMount() {
@@ -177,6 +205,7 @@ class Map extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.updateTileDepth(nextProps);
+    this.transport(nextProps.spritePosition);
   }
 
   updateTileDepth(nextProps) {
