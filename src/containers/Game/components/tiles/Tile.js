@@ -7,12 +7,12 @@ class Tile extends React.Component {
 
     this.state = {
       step: 0,
+      visible: false,
     }
 
     this.type = 'grass1';
     this.walkable = true;
     this.animated = false;
-    this.depth = false;
     this.steps = 0;
     if (props.position) {
       this.position = props.position;

@@ -43,7 +43,7 @@ class Player extends React.Component {
 
   walk(event) {
     let { direction, step } = this.state;
-    var gridPosition = this.props.position;
+    var gridPosition = { x: this.props.position.x, y: this.props.position.y };
     const isValid = this.props.isValid;
 
     if (Object.values(keyMap).includes(event.which)) {

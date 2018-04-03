@@ -1,6 +1,7 @@
 import React from 'react';
 import Styled from 'styled-components';
 import Flower from './Flower';
+import Tile from './Tile';
 
 const tileSize = 36;
 
@@ -29,7 +30,7 @@ const grassTypes = [
   'grass_flower', 'grass_tall', 'grass_tree',
 ]
 
-class Random extends React.Component {
+class Random extends Tile {
   constructor(props) {
     super(props);
 
@@ -37,11 +38,9 @@ class Random extends React.Component {
       type: '',
       grassSource: require(`../../../../graphics/tiles/grass1.png`),
       grassSource3D: undefined,
-      visible: false,
     }
 
     this.walkable = true;
-    this.setDepth = this.setDepth.bind(this);
   }
 
   componentWillMount() {
@@ -57,12 +56,9 @@ class Random extends React.Component {
     this.setState({ type: type, grassSource: grassSource, grassSource3D: grassSource3D });
   }
 
-  setDepth(depth) {
-    this.setState({ visible: depth });
-  }
-
   render() {
     const { type, grassSource, grassSource3D, visible } = this.state;
+    console.log(visible)
 
     let tile = <StyledGrass src={grassSource}/>;
     if (type === 'grass_tall') {
