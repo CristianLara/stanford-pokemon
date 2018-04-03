@@ -1,19 +1,22 @@
 import React from 'react';
-import Styled from 'styled-components';
 import Random from '../tiles/Random';
 import Map from './Map';
+import MemorialCourtMap from './MemorialCourtMap';
 
 class RandomMap extends Map {
   constructor(props) {
     super(props);
+    this.transitions = {
+      right: MemorialCourtMap,
+    };
   }
 
-  addMapFeatures(numTilesY, numTilesX) {
-    for (let y = 0; y < numTilesY; y++) {
+  addMapFeatures() {
+    for (let y = 0; y < this.numTilesY; y++) {
       if (!this.grid[y]) this.grid[y] = [];
       if (!this.gridRefs[y]) this.gridRefs[y] = [];
 
-      for (let x = 0; x < numTilesX; x++) {
+      for (let x = 0; x < this.numTilesX; x++) {
         this.grid[y][x] = (
           <Random
             key={x}
