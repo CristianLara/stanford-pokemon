@@ -54,11 +54,15 @@ class Tile extends React.Component {
 
   componentDidMount() {
     if (this.animated) {
-      setInterval(() => {
+      this.timer = setInterval(() => {
           const { step } = this.state;
           this.setState({ step: (step + 1) % this.steps });
       }, 250, this);
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
 }
