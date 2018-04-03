@@ -4,6 +4,7 @@ import Path from '../tiles/Path';
 import Path2 from '../tiles/Path2';
 import Statue from '../tiles/Statue';
 import Map from './Map';
+import OvalMap from './OvalMap';
 
 class MemorialCourtMap extends Map {
   constructor(props) {
@@ -12,6 +13,9 @@ class MemorialCourtMap extends Map {
     this.addPaths = this.addPaths.bind(this);
     this.addWalls = this.addWalls.bind(this);
     this.addStatues = this.addStatues.bind(this);
+    this.transitions = {
+      down: OvalMap,
+    };
   }
 
   addMapFeatures() {
