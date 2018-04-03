@@ -2,6 +2,7 @@ import Flower from '../tiles/Flower';
 import Wall from '../tiles/Wall';
 import Path from '../tiles/Path';
 import Path2 from '../tiles/Path2';
+import Statue from '../tiles/Statue';
 import Map from './Map';
 
 class MemorialCourtMap extends Map {
@@ -28,11 +29,19 @@ class MemorialCourtMap extends Map {
     ]);
     this.addPaths();
     this.addWalls();
-    this.addStatues();
   }
 
-  addStatues() {
-
+  addStatues(x, y) {
+    const height = 2;
+    const width = 1;
+    const startY1 = y + 1;
+    const startX1 = x + 1;
+    this.addTile(Statue, startX1, startY1, width, height);
+    this.addTile(Statue, startX1+1, startY1, width, height);
+    this.addTile(Statue, startX1+2, startY1, width, height);
+    this.addTile(Statue, startX1, startY1+2, width, height);
+    this.addTile(Statue, startX1+1, startY1+2, width, height);
+    this.addTile(Statue, startX1+2, startY1+2, width, height);
   }
 
   addPaths() {
@@ -53,6 +62,8 @@ class MemorialCourtMap extends Map {
     const startY3 = startY2 - pathHeight3 - 1;
     const startX3 = startX1 - pathWidth3 - 5;
     this.addTile(Path2, startX3, startY3, pathWidth3, pathHeight3);
+
+    this.addStatues(startX3, startY3);
   }
 
   addWalls() {
