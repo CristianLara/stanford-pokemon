@@ -8,6 +8,9 @@ class Path extends Tile {
     this.walkable = true;
     this.animated = false;
   }
+
+  static height = 3;
+  static width = 3;
 }
 
 export default Path;

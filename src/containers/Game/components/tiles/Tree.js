@@ -7,9 +7,10 @@ class Tree extends Tile {
     this.type = 'tree';
     this.walkable = false;
     this.animated = false;
-    this.width = 3;
-    this.height = 4;
   }
+
+  static height = 4;
+  static width = 3;
 }
 
 export default Tree;

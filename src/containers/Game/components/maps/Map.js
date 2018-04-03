@@ -1,6 +1,8 @@
 import React from 'react';
 import Styled from 'styled-components';
 import Grass from '../tiles/Grass';
+import Path from '../tiles/Path';
+// import Flower from '../tiles/Flower';
 
 class Map extends React.Component {
   constructor(props) {
@@ -23,53 +25,81 @@ class Map extends React.Component {
     this.updateTileDepth = this.updateTileDepth.bind(this);
     this.addMapFeatures = this.addMapFeatures.bind(this);
     this.fillInGrass = this.fillInGrass.bind(this);
+    this.addTile = this.addTile.bind(this);
+    this.addShape = this.addShape.bind(this);
   }
 
-  addMapFeatures(numTilesY, numTilesX) {
+  componentWillMount() {
+    const { height, width } = this.state;
+    this.numTilesY = Math.ceil(height / this.tileSize);
+    this.numTilesX = Math.ceil(width / this.tileSize);
+
+    this.addMapFeatures();
+    this.fillInGrass();
+  }
+
+  addMapFeatures() {
 
   }
 
-  getPositionLabelY(max, current) {
-    switch(current) {
-      case 0:
-        return 'top';
-      case max - 1:
-        return 'bottom';
-      default:
-        return 'mid';
+  getPositionLabelY(tile, max, current) {
+    if (tile.height === 3) {
+      switch(current) {
+        case 0:
+          return 'top';
+        case max - 1:
+          return 'bottom';
+        default:
+          return 'mid';
+      }
+    } else if (tile.height === 4) {
+      switch(current) {
+        case 0:
+          return 'top';
+        case max - 1:
+          return 'bottom';
+        case 1:
+          return 'midtop';
+        default:
+          return 'midbottom';
+      }
+    } else {
+      return '';
     }
   }
 
-  getPositionLabelYTall(max, current) {
-    switch(current) {
-      case 0:
-        return 'top';
-      case max - 1:
-        return 'bottom';
-      case 1:
-        return 'mid_top';
-      default:
-        return 'mid_bottom';
+  getPositionLabelX(tile, max, current) {
+    if (tile.width === 3) {
+      switch(current) {
+        case 0:
+          return 'left';
+        case max - 1:
+          return 'right';
+        default:
+          return 'mid';
+      }
+    } else if (tile.width === 4) {
+      switch(current) {
+        case 0:
+          return 'left';
+        case max - 1:
+          return 'right';
+        case 1:
+          return 'midleft';
+        default:
+          return 'midright';
+      }
+    } else {
+      return '';
     }
   }
 
-  getPositionLabelX(max, current) {
-    switch(current) {
-      case 0:
-        return 'left';
-      case max - 1:
-        return 'right';
-      default:
-        return 'mid';
-    }
-  }
-
-  fillInGrass(numTilesY, numTilesX) {
-    for (let y = 0; y < numTilesY; y++) {
+  fillInGrass() {
+    for (let y = 0; y < this.numTilesY; y++) {
       if (!this.grid[y]) this.grid[y] = [];
       if (!this.gridRefs[y]) this.gridRefs[y] = [];
 
-      for (let x = 0; x < numTilesX; x++) {
+      for (let x = 0; x < this.numTilesX; x++) {
         if (!this.grid[y][x]) {
           this.grid[y][x] = (
             <Grass
@@ -83,13 +113,62 @@ class Map extends React.Component {
     }
   }
 
-  componentWillMount() {
-    const { height, width } = this.state;
-    const numTilesY = Math.ceil(height / this.tileSize);
-    const numTilesX = Math.floor(width / this.tileSize);
+  addTile(Tile, startX, startY, width, height, cutoff) {
+    for (let y = 0; y < height; y++) {
+      if (startY + y < 0) continue;
+      if (!this.grid[y]) this.grid[y] = [];
+      if (!this.gridRefs[y]) this.gridRefs[y] = [];
+      var ypos = this.getPositionLabelY(Tile, height, y);
+      // handle 'cutting off' the vertical ends of paths
+      if (cutoff && (height > width) && (y === 0 || y === height-1)) {
+        ypos = 'mid';
+      }
 
-    this.addMapFeatures(numTilesY, numTilesX);
-    this.fillInGrass(numTilesY, numTilesX);
+      for (let x = 0; x < width; x++) {
+        if (startX + x < 0) continue;
+        var xpos = this.getPositionLabelX(Tile, width, x);
+        // handle 'cutting off' the horizontal ends of paths
+        if (cutoff && (height < width) && (x === 0 || x === width-1)) {
+          xpos = 'mid';
+        }
+        var position = `${ypos}_${xpos}`;
+        if (this.grid[startY + y][startX + x] &&
+            this.grid[startY + y][startX + x].type === Path &&
+            Tile.width === 3 && Tile.height === 3) {
+          // there is already a path in this spot, use bi-directional tile
+          position = 'mid_mid';
+        }
+        this.grid[startY + y][startX + x] = (
+          <Tile
+            key={startX + x}
+            position={position}
+            ref={ (inst) => this.gridRefs[startY + y][startX + x] = inst }
+          />
+        );
+      }
+    }
+  }
+
+  addShape(Tile, shape) {
+    const middleX = Math.floor(this.numTilesX / 2);
+    const middleY = Math.floor(this.numTilesY / 2);
+
+    const startY = middleY - Math.ceil(shape.length / 2);
+    const startX = middleX - Math.ceil(shape[0].length / 2);
+    for (let y = 0; y < shape.length; y++) {
+      this.grid[startY + y] = [];
+      this.gridRefs[startY + y] = [];
+      for (let x = 0; x < shape[0].length; x++) {
+        if (shape[y][x]) {
+          this.grid[startY + y][startX + x] = (
+            <Tile // change this to use provided tile
+              key={startX + x}
+              ref={ (inst) => this.gridRefs[startY + y][startX + x] = inst }
+            />
+          );
+        }
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {

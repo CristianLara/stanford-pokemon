@@ -1,6 +1,7 @@
 import React from 'react';
 // import RandomMap from './components/maps/RandomMap'
-import OvalMap from './components/maps/OvalMap'
+// import OvalMap from './components/maps/OvalMap'
+import MemorialCourtMap from './components/maps/MemorialCourtMap'
 import Player from './components/Player'
 
 class Game extends React.Component {
@@ -8,7 +9,7 @@ class Game extends React.Component {
     super(props);
 
     this.state = {
-      map: OvalMap,
+      map: MemorialCourtMap,
       spritePosition: {x: 1, y: 1},
     };
 
