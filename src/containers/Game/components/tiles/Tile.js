@@ -24,11 +24,6 @@ class Tile extends React.Component {
       height: ${this.tileSize}px;
       width: ${this.tileSize}px;
     `;
-    this.tileTypes = [
-      'top_left', 'top_mid', 'top_right',
-      'mid_left', 'mid_mid', 'mid_right',
-      'bottom_left', 'bottom_mid', 'bottom_right',
-    ];
   }
 
   setDepth(depth) {
