@@ -22,7 +22,6 @@ class Player extends React.Component {
     super(props);
 
     this.state = {
-      gridPosition: {x: 3, y: 3},
       stepSize: 36,
       direction: 'down',
       step: 0,
@@ -43,7 +42,8 @@ class Player extends React.Component {
   }
 
   walk(event) {
-    let { direction, step, gridPosition } = this.state;
+    let { direction, step } = this.state;
+    var gridPosition = this.props.position;
     const isValid = this.props.isValid;
 
     if (Object.values(keyMap).includes(event.which)) {
@@ -80,7 +80,7 @@ class Player extends React.Component {
     }
 
     this.props.updatePosition(gridPosition);
-    this.setState({ direction: direction, step: step, gridPosition: gridPosition });
+    this.setState({ direction: direction, step: step });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -93,7 +93,8 @@ class Player extends React.Component {
   }
 
   render() {
-    const { direction, step, stepSize, gridPosition } = this.state;
+    const { direction, step, stepSize } = this.state;
+    const gridPosition = this.props.position;
     const spriteSource = require(`../../../graphics/sprites/${direction}${step}.png`);
     const x = 4 + gridPosition.x * stepSize;
     const y = -16 + gridPosition.y * stepSize;
