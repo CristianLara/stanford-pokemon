@@ -58,7 +58,6 @@ class Random extends Tile {
 
   render() {
     const { type, grassSource, grassSource3D, visible } = this.state;
-    console.log(visible)
 
     let tile = <StyledGrass src={grassSource}/>;
     if (type === 'grass_tall') {
