@@ -9,6 +9,14 @@ class Tree extends Tile {
     this.animated = false;
   }
 
+  toggleHD(hd) {
+    if (hd) {
+      this.setState({ type: 'tree_hd' });
+    } else {
+      this.setState({ type: 'tree' });
+    }
+  }
+
   static height = 4;
   static width = 3;
 }
