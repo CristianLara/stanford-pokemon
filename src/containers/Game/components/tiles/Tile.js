@@ -8,7 +8,7 @@ class Tile extends React.Component {
     this.state = {
       step: 0,
       visible: false,
-      type: undefined
+      type: ''
     }
 
     this.walkable = true;
@@ -31,7 +31,12 @@ class Tile extends React.Component {
   }
 
   toggleHD(hd) {
-
+    const { type } = this.state;
+    if (hd) {
+      this.setState({ type: `${type.replace('_hd', '')}_hd` });
+    } else {
+      this.setState({ type: type.replace('_hd', '') });
+    }
   }
 
   render() {
@@ -49,6 +54,12 @@ class Tile extends React.Component {
     return (
       <this.StyledTile src={tile}/>
     );
+  }
+
+  componentWillMount() {
+    if (this.props.hd) {
+      this.setState({ type: this.state.type + '_hd' })
+    }
   }
 
   componentDidMount() {

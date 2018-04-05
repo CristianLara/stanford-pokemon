@@ -51,9 +51,7 @@ class Grass extends Tile {
     } else {
       newDirectory = 'grass'
     }
-    // console.log(`/tiles/${newDirectory}/${this.type}.png`);
     this.setState({ grassSource: require(`../../../../graphics/tiles/${newDirectory}/${this.type}.png`)});
-    // this.setState({ directory: newDirectory });
   }
 
   componentWillMount() {
@@ -64,10 +62,16 @@ class Grass extends Tile {
     else if(num < 0.96) this.type = this.tileTypes[3];
     else this.type = this.tileTypes[4];
 
-    const grassSource = require(`../../../../graphics/tiles/${this.state.directory}/${this.type}.png`);
+    if (this.props.hd) this.state.directory += '_hd';
+
+    const grassSource = require(
+      `../../../../graphics/tiles/${this.state.directory}/${this.type}.png`
+    );
     let grassSource3D = undefined;
     if (this.type === 'grass_tall') {
-      grassSource3D = require(`../../../../graphics/tiles/${this.state.directory}/${this.type}_3d.png`);
+      grassSource3D = require(
+        `../../../../graphics/tiles/${this.state.directory}/${this.type}_3d.png`
+      );
     } else if (this.type === 'grass_tree') {
       this.walkable = false;
     }

@@ -11,12 +11,23 @@ class Game extends React.Component {
     this.state = {
       map: MemorialCourtMap,
       spritePosition: {x: 3, y: 3},
+      // hd: true,
     };
 
     this.map = undefined;
+    this.hd = true;
     this.updatePosition = this.updatePosition.bind(this);
+    this.toggleHD = this.toggleHD.bind(this);
     this.updateMap = this.updateMap.bind(this);
     this.isValidPosition = this.isValidPosition.bind(this);
+
+    document.addEventListener("click", this.toggleHD);
+  }
+
+  toggleHD() {
+    // this.setState({ hd: !this.state.hd });
+    this.hd = !this.hd;
+    this.map.toggleHD(this.hd);
   }
 
   updateMap(newMap, newPosition) {
@@ -51,6 +62,7 @@ class Game extends React.Component {
           ref={ (instance) => this.map = instance }
           spritePosition={spritePosition}
           updateMap={this.updateMap}
+          hd={this.hd}
         />
       </div>
     );

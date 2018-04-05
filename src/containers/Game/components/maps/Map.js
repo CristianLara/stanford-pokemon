@@ -32,13 +32,13 @@ class Map extends React.Component {
     this.toggleHD = this.toggleHD.bind(this);
   }
 
-  toggleHD() {
-    this.hd = !this.hd;
+  toggleHD(hd) {
+    // this.hd = !this.hd;
 
     for (let y = 0; y < this.numTilesY; y++) {
       for (let x = 0; x < this.numTilesX; x++) {
         if (this.gridRefs[y][x]) {
-          this.gridRefs[y][x].toggleHD(this.hd);
+          this.gridRefs[y][x].toggleHD(hd);
         }
       }
     }
@@ -78,7 +78,7 @@ class Map extends React.Component {
 
     this.addMapFeatures();
     this.fillInGrass();
-    document.addEventListener("click", this.toggleHD);
+    // document.addEventListener("click", this.toggleHD);
   }
 
   addMapFeatures() {
@@ -155,6 +155,7 @@ class Map extends React.Component {
           <Tile
             key={startX + x}
             position={position}
+            hd={this.props.hd}
             ref={ (inst) => this.gridRefs[startY + y][startX + x] = inst }
           />
         );
@@ -176,6 +177,7 @@ class Map extends React.Component {
           this.grid[startY + y][startX + x] = (
             <Tile // change this to use provided tile
               key={startX + x}
+              hd={this.props.hd}
               ref={ (inst) => this.gridRefs[startY + y][startX + x] = inst }
             />
           );
