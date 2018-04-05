@@ -57,13 +57,12 @@ class Grass extends Tile {
   }
 
   componentWillMount() {
-    // this.type = this.tileTypes[Math.floor(Math.random() * this.tileTypes.length)]
-    var num=Math.random();
-    if(num < 0.4) this.type = this.tileTypes[0];  //probability 0.3
-    else if(num < 0.8) this.type = this.tileTypes[1]; // probability 0.3
-    else if(num < 0.88) this.type = this.tileTypes[2]; //probability 0.3
-    else if(num < 0.96) this.type = this.tileTypes[3]; //probability 0.3
-    else this.type = this.tileTypes[4];  //probability 0.1
+    var num = Math.random();
+    if (num < 0.4) this.type = this.tileTypes[0];
+    else if(num < 0.8) this.type = this.tileTypes[1];
+    else if(num < 0.88) this.type = this.tileTypes[2];
+    else if(num < 0.96) this.type = this.tileTypes[3];
+    else this.type = this.tileTypes[4];
 
     const grassSource = require(`../../../../graphics/tiles/${this.state.directory}/${this.type}.png`);
     let grassSource3D = undefined;
