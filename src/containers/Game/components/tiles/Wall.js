@@ -4,7 +4,7 @@ class Wall extends Tile {
   constructor(props) {
     super(props);
 
-    this.type = 'wall'
+    this.state.type = 'wall';
     this.walkable = false;
     this.animated = false;
   }

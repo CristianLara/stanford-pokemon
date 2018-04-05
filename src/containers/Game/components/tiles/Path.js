@@ -4,9 +4,17 @@ class Path extends Tile {
   constructor(props) {
     super(props);
 
-    this.type = 'path';
+    this.state.type = 'path';
     this.walkable = true;
     this.animated = false;
+  }
+
+  toggleHD(hd) {
+    if (hd) {
+      this.setState({ type: 'path_hd' });
+    } else {
+      this.setState({ type: 'path' });
+    }
   }
 
   static height = 3;

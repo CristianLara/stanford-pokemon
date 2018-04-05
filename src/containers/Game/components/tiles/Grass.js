@@ -29,6 +29,7 @@ class Grass extends Tile {
     super(props);
 
     this.state = {
+      directory: 'grass',
       type: '',
       grassSource: undefined,
       grassSource3D: undefined,
@@ -37,23 +38,35 @@ class Grass extends Tile {
 
     this.depth = true;
     this.tileTypes = [
-      'grass1', 'grass2', 'grass3', 'grass4',
+      'grass1', 'grass2', 'grass3', 'grass4', 'grass5'
     ];
 
     this.setDepth = this.setDepth.bind(this);
   }
 
+  toggleHD(hd) {
+    var newDirectory = '';
+    if (hd) {
+      newDirectory = 'grass_hd'
+    } else {
+      newDirectory = 'grass'
+    }
+    // console.log(`/tiles/${newDirectory}/${this.type}.png`);
+    this.setState({ grassSource: require(`../../../../graphics/tiles/${newDirectory}/${this.type}.png`)});
+    // this.setState({ directory: newDirectory });
+  }
+
   componentWillMount() {
-    const type = this.tileTypes[Math.floor(Math.random() * this.tileTypes.length)]
-    const grassSource = require(`../../../../graphics/tiles/${type}.png`);
+    this.type = this.tileTypes[Math.floor(Math.random() * this.tileTypes.length)]
+    const grassSource = require(`../../../../graphics/tiles/${this.state.directory}/${this.type}.png`);
     let grassSource3D = undefined;
-    if (type === 'grass_tall') {
-      grassSource3D = require(`../../../../graphics/tiles/${type}_3d.png`);
-    } else if (type === 'grass_tree') {
+    if (this.type === 'grass_tall') {
+      grassSource3D = require(`../../../../graphics/tiles/${this.state.directory}/${this.type}_3d.png`);
+    } else if (this.type === 'grass_tree') {
       this.walkable = false;
     }
 
-    this.setState({ type: type, grassSource: grassSource, grassSource3D: grassSource3D });
+    this.setState({ type: this.type, grassSource: grassSource, grassSource3D: grassSource3D });
   }
 
   setDepth(depth) {

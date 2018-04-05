@@ -16,6 +16,7 @@ class Map extends React.Component {
     this.grid = [];
     this.gridRefs = [];
     this.map = {}
+    this.hd = false;
     this.tileSize = 36;
     this.row = Styled.div`
       height: ${this.tileSize}px;
@@ -28,6 +29,17 @@ class Map extends React.Component {
     this.fillInGrass = this.fillInGrass.bind(this);
     this.addTile = this.addTile.bind(this);
     this.addShape = this.addShape.bind(this);
+    this.toggleHD = this.toggleHD.bind(this);
+  }
+
+  toggleHD() {
+    this.hd = !this.hd;
+
+    for (let y = 0; y < this.numTilesY; y++) {
+      for (let x = 0; x < this.numTilesX; x++) {
+        this.gridRefs[y][x].toggleHD(this.hd);
+      }
+    }
   }
 
   detectEdge(position) {
@@ -64,6 +76,7 @@ class Map extends React.Component {
 
     this.addMapFeatures();
     this.fillInGrass();
+    document.addEventListener("click", this.toggleHD);
   }
 
   addMapFeatures() {
@@ -133,6 +146,7 @@ class Map extends React.Component {
             <Grass
               key={x}
               ref={ (instance) => this.gridRefs[y][x] = instance }
+              hd={this.props.hd}
             />
           );
         }

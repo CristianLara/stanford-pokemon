@@ -36,7 +36,7 @@ class Random extends Tile {
 
     this.state = {
       type: '',
-      grassSource: require(`../../../../graphics/tiles/grass1.png`),
+      grassSource: require(`../../../../graphics/tiles/grass/grass1.png`),
       grassSource3D: undefined,
     }
 
@@ -45,10 +45,10 @@ class Random extends Tile {
 
   componentWillMount() {
     const type = grassTypes[Math.floor(Math.random() * grassTypes.length)]
-    const grassSource = require(`../../../../graphics/tiles/${type}.png`);
+    const grassSource = require(`../../../../graphics/tiles/grass/${type}.png`);
     let grassSource3D = undefined;
     if (type === 'grass_tall') {
-      grassSource3D = require(`../../../../graphics/tiles/${type}_3d.png`);
+      grassSource3D = require(`../../../../graphics/tiles/grass/${type}_3d.png`);
     } else if (type === 'grass_tree') {
       this.walkable = false;
     }

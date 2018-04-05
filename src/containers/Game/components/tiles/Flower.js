@@ -4,10 +4,18 @@ class Flower extends Tile {
   constructor(props) {
     super(props);
 
-    this.type = 'flowers';
+    this.state.type = 'flowers';
     this.walkable = true;
     this.animated = true;
     this.steps = 5;
+  }
+
+  toggleHD(hd) {
+    if (hd) {
+      this.setState({ type: 'flowers_hd' });
+    } else {
+      this.setState({ type: 'flowers' });
+    }
   }
 }
 

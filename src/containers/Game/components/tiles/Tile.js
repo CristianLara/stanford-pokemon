@@ -8,9 +8,9 @@ class Tile extends React.Component {
     this.state = {
       step: 0,
       visible: false,
+      type: undefined
     }
 
-    this.type = 'grass1';
     this.walkable = true;
     this.animated = false;
     this.steps = 0;
@@ -30,16 +30,20 @@ class Tile extends React.Component {
     this.setState({ visible: depth });
   }
 
-  render() {
-    const { step } = this.state;
+  toggleHD(hd) {
 
+  }
+
+  render() {
+    const { step, type } = this.state;
+    if (!type) return null;
     var tile = '';
     if (this.animated) {
-      tile = require(`../../../../graphics/tiles/${this.type}/${step}.png`);
+      tile = require(`../../../../graphics/tiles/${type}/${step}.png`);
     } else if (this.position) {
-      tile = require(`../../../../graphics/tiles/${this.type}/${this.position}.png`);
+      tile = require(`../../../../graphics/tiles/${type}/${this.position}.png`);
     } else {
-      tile = require(`../../../../graphics/tiles/${this.type}.png`);
+      tile = require(`../../../../graphics/tiles/${type}.png`);
     }
 
     return (

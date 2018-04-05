@@ -4,9 +4,17 @@ class Statue extends Tile {
   constructor(props) {
     super(props);
 
-    this.type = 'statue'
+    this.state.type = 'statue';
     this.walkable = false;
     this.animated = false;
+  }
+
+  toggleHD(hd) {
+    if (hd) {
+      this.setState({ type: 'statue_hd' });
+    } else {
+      this.setState({ type: 'statue' });
+    }
   }
 
   static height = 2;
