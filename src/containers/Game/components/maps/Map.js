@@ -85,58 +85,6 @@ class Map extends React.Component {
 
   }
 
-  // getPositionLabelY(tile, max, current) {
-  //   if (tile.height === 2 || tile.height === 3) {
-  //     switch(current) {
-  //       case 0:
-  //         return 'top';
-  //       case max - 1:
-  //         return 'bottom';
-  //       default:
-  //         return 'mid';
-  //     }
-  //   } else if (tile.height === 4) {
-  //     switch(current) {
-  //       case 0:
-  //         return 'top';
-  //       case max - 1:
-  //         return 'bottom';
-  //       case 1:
-  //         return 'midtop';
-  //       default:
-  //         return 'midbottom';
-  //     }
-  //   } else {
-  //     return '';
-  //   }
-  // }
-  //
-  // getPositionLabelX(tile, max, current) {
-  //   if (tile.width === 2 || tile.width === 3) {
-  //     switch(current) {
-  //       case 0:
-  //         return 'left';
-  //       case max - 1:
-  //         return 'right';
-  //       default:
-  //         return 'mid';
-  //     }
-  //   } else if (tile.width === 4) {
-  //     switch(current) {
-  //       case 0:
-  //         return 'left';
-  //       case max - 1:
-  //         return 'right';
-  //       case 1:
-  //         return 'midleft';
-  //       default:
-  //         return 'midright';
-  //     }
-  //   } else {
-  //     return '';
-  //   }
-  // }
-
   getPositionLabel(realSize, max, current) {
     if (max === realSize) {
       return current;
