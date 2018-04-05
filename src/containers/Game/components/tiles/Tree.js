@@ -4,7 +4,7 @@ class Tree extends Tile {
   constructor(props) {
     super(props);
 
-    this.type = 'tree';
+    this.state.type = 'tree';
     this.walkable = false;
     this.animated = false;
   }
