@@ -67,9 +67,9 @@ class MemorialCourtMap extends Map {
     const pathWidth3 = 5;
     const startY3 = startY2 - pathHeight3 - 1;
     const startX3 = startX1 - pathWidth3 - 5;
-    this.addTile(Path2, startX3, startY3, pathWidth3, pathHeight3);
+    this.addTile(Path2, startX3, startY3+1, pathWidth3, pathHeight3);
 
-    this.addStatues(startX3, startY3);
+    this.addStatues(startX3, startY3+1);
   }
 
   addWalls() {
@@ -83,11 +83,11 @@ class MemorialCourtMap extends Map {
     const startX2 = wallWidth + 4;
     this.addTile(Wall, startX2, startY2, wallWidth, wallHeight);
 
-    const startY3 = this.numTilesY - Wall.height;
+    const startY3 = this.numTilesY - Wall.height + 1;
     const startX3 = 0;
     this.addTile(Wall, startX3, startY3, wallWidth, wallHeight);
 
-    const startY4 = this.numTilesY - Wall.height;
+    const startY4 = this.numTilesY - Wall.height + 1;
     const startX4 = wallWidth + 4;
     this.addTile(Wall, startX4, startY4, wallWidth, wallHeight);
   }

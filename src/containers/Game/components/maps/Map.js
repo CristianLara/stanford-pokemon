@@ -85,55 +85,70 @@ class Map extends React.Component {
 
   }
 
-  getPositionLabelY(tile, max, current) {
-    if (tile.height === 2 || tile.height === 3) {
-      switch(current) {
-        case 0:
-          return 'top';
-        case max - 1:
-          return 'bottom';
-        default:
-          return 'mid';
-      }
-    } else if (tile.height === 4) {
-      switch(current) {
-        case 0:
-          return 'top';
-        case max - 1:
-          return 'bottom';
-        case 1:
-          return 'midtop';
-        default:
-          return 'midbottom';
-      }
-    } else {
-      return '';
-    }
-  }
+  // getPositionLabelY(tile, max, current) {
+  //   if (tile.height === 2 || tile.height === 3) {
+  //     switch(current) {
+  //       case 0:
+  //         return 'top';
+  //       case max - 1:
+  //         return 'bottom';
+  //       default:
+  //         return 'mid';
+  //     }
+  //   } else if (tile.height === 4) {
+  //     switch(current) {
+  //       case 0:
+  //         return 'top';
+  //       case max - 1:
+  //         return 'bottom';
+  //       case 1:
+  //         return 'midtop';
+  //       default:
+  //         return 'midbottom';
+  //     }
+  //   } else {
+  //     return '';
+  //   }
+  // }
+  //
+  // getPositionLabelX(tile, max, current) {
+  //   if (tile.width === 2 || tile.width === 3) {
+  //     switch(current) {
+  //       case 0:
+  //         return 'left';
+  //       case max - 1:
+  //         return 'right';
+  //       default:
+  //         return 'mid';
+  //     }
+  //   } else if (tile.width === 4) {
+  //     switch(current) {
+  //       case 0:
+  //         return 'left';
+  //       case max - 1:
+  //         return 'right';
+  //       case 1:
+  //         return 'midleft';
+  //       default:
+  //         return 'midright';
+  //     }
+  //   } else {
+  //     return '';
+  //   }
+  // }
 
-  getPositionLabelX(tile, max, current) {
-    if (tile.width === 2 || tile.width === 3) {
-      switch(current) {
-        case 0:
-          return 'left';
-        case max - 1:
-          return 'right';
-        default:
-          return 'mid';
-      }
-    } else if (tile.width === 4) {
-      switch(current) {
-        case 0:
-          return 'left';
-        case max - 1:
-          return 'right';
-        case 1:
-          return 'midleft';
-        default:
-          return 'midright';
-      }
+  getPositionLabel(realSize, max, current) {
+    if (max === realSize) {
+      return current;
     } else {
-      return '';
+      if (current < realSize - 1) {
+        return current;
+      } else if (current === max - 1) {
+        return realSize - 1;
+      } else {
+        // do some funky math to loop inner tiles
+        return 1 + ((current - (realSize - 1)) % (realSize - 2));
+      }
     }
   }
 
@@ -159,32 +174,34 @@ class Map extends React.Component {
 
   addTile(Tile, startX, startY, width, height, cutoff) {
     for (let y = 0; y < height; y++) {
-      if (startY + y < 0) continue;
+      if (startY + y < 0 || startY + y >= this.numTilesY) continue;
       if (!this.grid[y]) this.grid[y] = [];
       if (!this.gridRefs[y]) this.gridRefs[y] = [];
-      var ypos = this.getPositionLabelY(Tile, height, y);
+      var ypos = Math.min(y, Tile.height-1);
+      ypos = this.getPositionLabel(Tile.height, height, y);
       // handle 'cutting off' the vertical ends of paths
       if (cutoff && (height > width) && (y === 0 || y === height-1)) {
-        ypos = 'mid';
+        ypos = 1;
       }
 
       for (let x = 0; x < width; x++) {
         if (startX + x < 0) continue;
-        var xpos = this.getPositionLabelX(Tile, width, x);
+        var xpos = x;
+        xpos = this.getPositionLabel(Tile.width, width, x);
         // handle 'cutting off' the horizontal ends of paths
         if (cutoff && (height < width) && (x === 0 || x === width-1)) {
-          xpos = 'mid';
+          xpos = 1;
         }
         var position = `${ypos}_${xpos}`;
         if (this.grid[startY + y][startX + x] &&
             this.grid[startY + y][startX + x].type === Path &&
             Tile.width === 3 && Tile.height === 3) {
           // there is already a path in this spot, use bi-directional tile
-          position = 'mid_mid';
-        } else if (xpos === '') {
-          position = ypos;
-        } else if (ypos === '') {
-          position = xpos;
+          position = '1_1';
+        } else if (Tile.width === 1) {
+          position = ypos + '';
+        } else if (Tile.height === 1) {
+          position = xpos + '';
         }
         this.grid[startY + y][startX + x] = (
           <Tile
