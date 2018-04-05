@@ -37,7 +37,9 @@ class Map extends React.Component {
 
     for (let y = 0; y < this.numTilesY; y++) {
       for (let x = 0; x < this.numTilesX; x++) {
-        this.gridRefs[y][x].toggleHD(this.hd);
+        if (this.gridRefs[y][x]) {
+          this.gridRefs[y][x].toggleHD(this.hd);
+        }
       }
     }
   }
