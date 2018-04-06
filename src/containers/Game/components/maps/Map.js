@@ -140,17 +140,7 @@ class Map extends React.Component {
         if (cutoff && (height < width) && (x === 0 || x === width-1)) {
           xpos = 1;
         }
-        var position = `${ypos}_${xpos}`;
-        if (this.grid[startY + y][startX + x] &&
-            this.grid[startY + y][startX + x].type === Path &&
-            Tile.width === 3 && Tile.height === 3) {
-          // there is already a path in this spot, use bi-directional tile
-          position = '1_1';
-        } else if (Tile.width === 1) {
-          position = ypos + '';
-        } else if (Tile.height === 1) {
-          position = xpos + '';
-        }
+        var position = this.combinePositions(Tile, ypos, xpos, startY, y, startX, x, height);
         this.grid[startY + y][startX + x] = (
           <Tile
             key={startX + x}
@@ -163,6 +153,36 @@ class Map extends React.Component {
     }
   }
 
+  combinePositions(Tile, ypos, xpos, startY, y, startX, x, height) {
+    var position = `${ypos}_${xpos}`;
+    if (this.grid[startY + y][startX + x] &&
+        this.grid[startY + y][startX + x].type === Path &&
+        Tile.width === 3 && Tile.height === 3) {
+      // there is already a path in this spot, use bi-directional tile
+      position = '1_1';
+      if (this.props.hd) {
+        if (y === 0) {
+          if (this.grid[startY + y][startX + x].props.position === '1_0') {
+            position = '0_0_corner';
+          } else if (this.grid[startY + y][startX + x].props.position === '1_2') {
+            position = '0_1_corner';
+          }
+        } else if (y === height - 1) {
+          if (this.grid[startY + y][startX + x].props.position === '1_0') {
+            position = '1_0_corner';
+          } else if (this.grid[startY + y][startX + x].props.position === '1_2') {
+            position = '1_1_corner';
+          }
+        }
+      }
+    } else if (Tile.width === 1) {
+      position = ypos + '';
+    } else if (Tile.height === 1) {
+      position = xpos + '';
+    }
+    return position;
+  }
+
   addShape(Tile, shape) {
     const middleX = Math.floor(this.numTilesX / 2);
     const middleY = Math.floor(this.numTilesY / 2);
@@ -170,8 +190,8 @@ class Map extends React.Component {
     const startY = middleY - Math.ceil(shape.length / 2);
     const startX = middleX - Math.ceil(shape[0].length / 2);
     for (let y = 0; y < shape.length; y++) {
-      this.grid[startY + y] = [];
-      this.gridRefs[startY + y] = [];
+      if (!this.gridRefs[startY + y]) this.grid[startY + y] = [];
+      if (!this.gridRefs[startY + y]) this.gridRefs[startY + y] = [];
       for (let x = 0; x < shape[0].length; x++) {
         if (shape[y][x]) {
           this.grid[startY + y][startX + x] = (
