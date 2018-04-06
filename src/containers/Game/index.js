@@ -9,7 +9,7 @@ class Game extends React.Component {
     super(props);
 
     this.state = {
-      map: MemorialCourtMap,
+      Map: MemorialCourtMap,
       spritePosition: {x: 3, y: 3},
       // hd: true,
     };
@@ -31,7 +31,7 @@ class Game extends React.Component {
   }
 
   updateMap(newMap, newPosition) {
-      this.setState({ map: newMap, spritePosition: newPosition });
+      this.setState({ Map: newMap, spritePosition: newPosition });
   }
 
   updatePosition(newPosition) {
@@ -50,7 +50,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { spritePosition } = this.state;
+    const { spritePosition, Map } = this.state;
     return (
       <div>
         <Player
@@ -58,7 +58,7 @@ class Game extends React.Component {
           isValid={this.isValidPosition}
           updatePosition={this.updatePosition}
         />
-        <this.state.map
+        <Map
           ref={ (instance) => this.map = instance }
           spritePosition={spritePosition}
           updateMap={this.updateMap}
