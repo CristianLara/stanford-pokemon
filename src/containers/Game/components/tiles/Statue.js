@@ -9,14 +9,6 @@ class Statue extends Tile {
     this.animated = false;
   }
 
-  toggleHD(hd) {
-    if (hd) {
-      this.setState({ type: 'statue_hd' });
-    } else {
-      this.setState({ type: 'statue' });
-    }
-  }
-
   static height = 2;
   static width = 1;
 }

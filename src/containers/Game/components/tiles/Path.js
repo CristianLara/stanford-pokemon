@@ -9,13 +9,6 @@ class Path extends Tile {
     this.animated = false;
   }
 
-  toggleHD(hd) {
-    if (hd) {
-      this.setState({ type: 'path_hd' });
-    } else {
-      this.setState({ type: 'path' });
-    }
-  }
 
   static height = 3;
   static width = 3;

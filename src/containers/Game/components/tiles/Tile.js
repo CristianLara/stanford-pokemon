@@ -15,7 +15,7 @@ class Tile extends React.Component {
     this.animated = false;
     this.steps = 0;
     if (props.position) {
-      this.position = props.position;
+      this.state.position = props.position;
     }
     this.setDepth = this.setDepth.bind(this);
 
@@ -40,13 +40,13 @@ class Tile extends React.Component {
   }
 
   render() {
-    const { step, type } = this.state;
+    const { step, type, position } = this.state;
     if (!type) return null;
     var tile = '';
     if (this.animated) {
       tile = require(`../../../../graphics/tiles/${type}/${step}.png`);
-    } else if (this.position) {
-      tile = require(`../../../../graphics/tiles/${type}/${this.position}.png`);
+    } else if (position) {
+      tile = require(`../../../../graphics/tiles/${type}/${position}.png`);
     } else {
       tile = require(`../../../../graphics/tiles/${type}.png`);
     }

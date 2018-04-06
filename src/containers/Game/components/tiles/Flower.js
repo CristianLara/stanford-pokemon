@@ -10,13 +10,6 @@ class Flower extends Tile {
     this.steps = 5;
   }
 
-  toggleHD(hd) {
-    if (hd) {
-      this.setState({ type: 'flowers_hd' });
-    } else {
-      this.setState({ type: 'flowers' });
-    }
-  }
 }
 
 export default Flower;

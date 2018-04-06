@@ -5,17 +5,8 @@ class Tree extends Tile {
     super(props);
 
     this.state.type = 'tree';
-    // if (this.props.hd) this.state.type += '_hd';
     this.walkable = false;
     this.animated = false;
-  }
-
-  toggleHD(hd) {
-    if (hd) {
-      this.setState({ type: 'tree_hd' });
-    } else {
-      this.setState({ type: 'tree' });
-    }
   }
 
   static height = 4;
