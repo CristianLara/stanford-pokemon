@@ -123,8 +123,8 @@ class Map extends React.Component {
   addTile(Tile, startX, startY, width, height, cutoff) {
     for (let y = 0; y < height; y++) {
       if (startY + y < 0 || startY + y >= this.numTilesY) continue;
-      if (!this.grid[y]) this.grid[y] = [];
-      if (!this.gridRefs[y]) this.gridRefs[y] = [];
+      if (!this.grid[startY + y]) this.grid[startY + y] = [];
+      if (!this.gridRefs[startY + y]) this.gridRefs[startY + y] = [];
       var ypos = Math.min(y, Tile.height-1);
       ypos = this.getPositionLabel(Tile.height, height, y);
       // handle 'cutting off' the vertical ends of paths
@@ -133,7 +133,7 @@ class Map extends React.Component {
       }
 
       for (let x = 0; x < width; x++) {
-        if (startX + x < 0) continue;
+        if (startX + x < 0 || startX + x >= this.numTilesX) continue;
         var xpos = x;
         xpos = this.getPositionLabel(Tile.width, width, x);
         // handle 'cutting off' the horizontal ends of paths
