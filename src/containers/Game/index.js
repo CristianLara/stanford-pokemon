@@ -2,6 +2,7 @@ import React from 'react';
 // import RandomMap from './components/maps/RandomMap'
 // import OvalMap from './components/maps/OvalMap'
 import MemorialCourtMap from './components/maps/MemorialCourtMap'
+import MainQuadMap from './components/maps/MainQuadMap'
 import Player from './components/Player'
 
 class Game extends React.Component {
@@ -9,8 +10,8 @@ class Game extends React.Component {
     super(props);
 
     this.state = {
-      Map: MemorialCourtMap,
-      spritePosition: {x: 3, y: 3},
+      Map: MainQuadMap,
+      spritePosition: {x: 5, y: 5},
       // hd: true,
     };
 
@@ -21,7 +22,7 @@ class Game extends React.Component {
     this.updateMap = this.updateMap.bind(this);
     this.isValidPosition = this.isValidPosition.bind(this);
 
-    document.addEventListener("click", this.toggleHD);
+    // document.addEventListener("click", this.toggleHD);
   }
 
   toggleHD() {
@@ -39,13 +40,15 @@ class Game extends React.Component {
   }
 
   isValidPosition(y, x) {
-    const height = this.map.gridRefs.length;
-    var width = 0;
-    if (height > 0) {
-      width = this.map.gridRefs[0].length;
-    }
-    if ((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
-      return this.map.gridRefs[y][x].walkable;
+    if (this.map) {
+      const height = this.map.gridRefs.length;
+      var width = 0;
+      if (height > 0) {
+        width = this.map.gridRefs[0].length;
+      }
+      if ((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
+        return this.map.gridRefs[y][x].walkable;
+      }
     }
   }
 

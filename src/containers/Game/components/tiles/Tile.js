@@ -21,8 +21,10 @@ class Tile extends React.Component {
 
     this.tileSize = 36;
     this.StyledTile = Styled.img`
+      position: absolute;
       height: ${this.tileSize}px;
       width: ${this.tileSize}px;
+      left: 0px;
     `;
   }
 

@@ -6,6 +6,7 @@ import Statue from '../tiles/Statue';
 import Map from './Map';
 import OvalMap from './OvalMap';
 import RandomMap from './RandomMap';
+import MainQuadMap from './MainQuadMap';
 
 class MemorialCourtMap extends Map {
   constructor(props) {
@@ -17,6 +18,7 @@ class MemorialCourtMap extends Map {
     this.transitions = {
       down: OvalMap,
       left: RandomMap,
+      up: MainQuadMap,
     };
   }
 
