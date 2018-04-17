@@ -74,7 +74,7 @@ class MemorialCourtMap extends Map {
 
   addWalls() {
     const wallHeight = Wall.height;
-    const wallWidth = (this.numTilesX -  4) / 2;
+    const wallWidth = Math.ceil((this.numTilesX -  4) / 2);
     const startY1 = -2;
     const startX1 = 0;
     this.addTile(Wall, startX1, startY1, wallWidth, wallHeight);
