@@ -50,33 +50,6 @@ class Map extends React.Component {
     }
   }
 
-  detectEdge(position) {
-    switch(position.x) {
-      case 0:
-        return { edge: 'left', newPosition: {x: this.numTilesX-1, y: Math.floor(this.numTilesY/2)} };
-      case this.numTilesX - 1:
-        return { edge: 'right', newPosition: {x: 0, y: Math.floor(this.numTilesY/2)} };
-      default:
-        break;
-    }
-    switch(position.y) {
-      case 0:
-        return { edge: 'up', newPosition: {x: Math.floor(this.numTilesX/2), y: this.numTilesY-1} };
-      case this.numTilesY - 1:
-        return { edge: 'down', newPosition: {x: Math.floor(this.numTilesX/2), y: 0} };
-      default:
-        break;
-    }
-    return {};
-  }
-
-  transport(position) {
-    const { edge, newPosition } = this.detectEdge(position);
-    if (edge && (edge in this.transitions)) {
-      this.props.updateMap(this.transitions[edge], newPosition);
-    }
-  }
-
   componentWillMount() {
     const { height, width } = this.state;
     this.numTilesY = Math.ceil(height / this.tileSize);
@@ -247,6 +220,37 @@ class Map extends React.Component {
     //     this.gridRefs[nextY][nextX].setDepth(true);
     //   }
     // }
+  }
+
+  detectEdge(oldPosition, newPosition) {
+    switch(newPosition.x) {
+      case 0:
+        if (newPosition.x === oldPosition.x) return {};
+        return { edge: 'left', newPosition: {x: this.numTilesX-1, y: Math.floor(this.numTilesY/2)} };
+      case this.numTilesX - 1:
+        if (newPosition.x === oldPosition.x) return {};
+        return { edge: 'right', newPosition: {x: 0, y: Math.floor(this.numTilesY/2)} };
+      default:
+        break;
+    }
+    switch(newPosition.y) {
+      case 0:
+        if (newPosition.y === oldPosition.y) return {};
+        return { edge: 'up', newPosition: {x: Math.floor(this.numTilesX/2), y: this.numTilesY-1} };
+      case this.numTilesY - 1:
+        if (newPosition.y === oldPosition.y) return {};
+        return { edge: 'down', newPosition: {x: Math.floor(this.numTilesX/2), y: 0} };
+      default:
+        break;
+    }
+    return {};
+  }
+
+  transport(position) {
+    const { edge, newPosition } = this.detectEdge(this.props.spritePosition, position);
+    if (edge && (edge in this.transitions)) {
+      this.props.updateMap(this.transitions[edge], newPosition);
+    }
   }
 
   render() {
