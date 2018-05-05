@@ -14,6 +14,7 @@ class Tile extends React.Component {
     this.walkable = true;
     this.animated = false;
     this.steps = 0;
+    this.rate = 250;
     if (props.position) {
       this.state.position = props.position;
     }
@@ -46,7 +47,11 @@ class Tile extends React.Component {
     if (!type) return null;
     var tile = '';
     if (this.animated) {
-      tile = require(`../../../../graphics/tiles/${type}/${step}.png`);
+      if (this.large) {
+        tile = require(`../../../../graphics/tiles/${type}/${step}/${position}.png`);
+      } else {
+        tile = require(`../../../../graphics/tiles/${type}/${step}.png`);
+      }
     } else if (position) {
       tile = require(`../../../../graphics/tiles/${type}/${position}.png`);
     } else {
@@ -69,7 +74,7 @@ class Tile extends React.Component {
       this.timer = setInterval(() => {
           const { step } = this.state;
           this.setState({ step: (step + 1) % this.steps });
-      }, 250, this);
+      }, this.rate, this);
     }
   }
 

@@ -7,7 +7,7 @@ class RandomMap extends Map {
   constructor(props) {
     super(props);
     this.transitions = {
-      right: MemorialCourtMap,
+      left: MemorialCourtMap,
     };
   }
 

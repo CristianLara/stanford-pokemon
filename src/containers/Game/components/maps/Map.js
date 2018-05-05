@@ -2,7 +2,7 @@ import React from 'react';
 import Styled from 'styled-components';
 import Grass from '../tiles/Grass';
 import Path from '../tiles/Path';
-import Flower from '../tiles/Flower';
+import Road from '../tiles/Road';
 
 class Map extends React.Component {
   constructor(props) {
@@ -132,7 +132,7 @@ class Map extends React.Component {
         if (cutoff && (height < width) && (x === 0 || x === width-1)) {
           xpos = 1;
         }
-        var position = this.combinePositions(Tile, ypos, xpos, startY, y, startX, x, height);
+        var position = this.combinePositions(Tile, ypos, xpos, startY, y, startX, x, height, width);
         this.grid[startY + y][startX + x].push(
           <Tile
             position={position}
@@ -144,12 +144,12 @@ class Map extends React.Component {
     }
   }
 
-  combinePositions(Tile, ypos, xpos, startY, y, startX, x, height) {
+  combinePositions(Tile, ypos, xpos, startY, y, startX, x, height, width) {
     var position = `${ypos}_${xpos}`;
     const tileDepth = this.grid[startY + y][startX + x].length;
     const topTile = this.grid[startY + y][startX + x][tileDepth-1];
     if (this.grid[startY + y][startX + x] &&
-        topTile.type === Path &&
+        (topTile.type === Path || topTile.type === Road) &&
         Tile.width === 3 && Tile.height === 3) {
       // there is already a path in this spot, use bi-directional tile
       position = '1_1';
@@ -164,6 +164,18 @@ class Map extends React.Component {
           if (topTile.props.position === '1_0') {
             position = '1_0_corner';
           } else if (topTile.props.position === '1_2') {
+            position = '1_1_corner';
+          }
+        } else if (x === 0) {
+          if (topTile.props.position === '0_1') {
+            position = '0_0_corner';
+          } else if (topTile.props.position === '2_1') {
+            position = '1_0_corner';
+          }
+        } else if (x === width - 1) {
+          if (topTile.props.position === '0_1') {
+            position = '0_1_corner';
+          } else if (topTile.props.position === '2_1') {
             position = '1_1_corner';
           }
         }

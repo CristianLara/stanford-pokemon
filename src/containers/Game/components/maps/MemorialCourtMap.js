@@ -7,6 +7,7 @@ import Map from './Map';
 import OvalMap from './OvalMap';
 import RandomMap from './RandomMap';
 import MainQuadMap from './MainQuadMap';
+import HooverTowerMap from './HooverTowerMap';
 
 class MemorialCourtMap extends Map {
   constructor(props) {
@@ -17,8 +18,9 @@ class MemorialCourtMap extends Map {
     this.addStatues = this.addStatues.bind(this);
     this.transitions = {
       down: OvalMap,
-      left: RandomMap,
+      left: HooverTowerMap,
       up: MainQuadMap,
+      right: RandomMap,
     };
   }
 

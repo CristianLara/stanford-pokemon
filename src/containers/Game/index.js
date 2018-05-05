@@ -1,16 +1,17 @@
 import React from 'react';
 // import RandomMap from './components/maps/RandomMap'
 // import OvalMap from './components/maps/OvalMap'
-import MemorialCourtMap from './components/maps/MemorialCourtMap'
-import MainQuadMap from './components/maps/MainQuadMap'
-import Player from './components/Player'
+// import MemorialCourtMap from './components/maps/MemorialCourtMap'
+// import MainQuadMap from './components/maps/MainQuadMap';
+import HooverTowerMap from './components/maps/HooverTowerMap';
+import Player from './components/Player';
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      Map: MainQuadMap,
+      Map: HooverTowerMap,
       spritePosition: {x: 5, y: 5},
       // hd: true,
     };

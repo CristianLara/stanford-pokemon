@@ -9,7 +9,6 @@ class Path extends Tile {
     this.animated = false;
   }
 
-
   static height = 3;
   static width = 3;
 }
