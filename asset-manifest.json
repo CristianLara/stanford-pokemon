@@ -1,6 +1,22 @@
 {
-  "main.css": "static/css/main.91c14c4e.css",
-  "main.css.map": "static/css/main.91c14c4e.css.map",
-  "main.js": "static/js/main.02092127.js",
-  "main.js.map": "static/js/main.02092127.js.map"
+  "main.css": "static/css/main.21ae89c0.css",
+  "main.css.map": "static/css/main.21ae89c0.css.map",
+  "main.js": "static/js/main.952a1955.js",
+  "main.js.map": "static/js/main.952a1955.js.map",
+  "static/media/pkmndp-webfont.woff": "static/media/pkmndp-webfont.70a5dcc4.woff",
+  "static/media/pkmndp-webfont.woff2": "static/media/pkmndp-webfont.4c4afb8a.woff2",
+  "static/media/pkmndpb-webfont.woff": "static/media/pkmndpb-webfont.a305d3e7.woff",
+  "static/media/pkmndpb-webfont.woff2": "static/media/pkmndpb-webfont.04b7aa84.woff2",
+  "static/media/pkmnem-webfont.woff": "static/media/pkmnem-webfont.7080a22b.woff",
+  "static/media/pkmnem-webfont.woff2": "static/media/pkmnem-webfont.1803bdf0.woff2",
+  "static/media/pkmnemn-webfont.woff": "static/media/pkmnemn-webfont.a927dac7.woff",
+  "static/media/pkmnemn-webfont.woff2": "static/media/pkmnemn-webfont.e0e2159f.woff2",
+  "static/media/pkmnems-webfont.woff": "static/media/pkmnems-webfont.1d175c4c.woff",
+  "static/media/pkmnems-webfont.woff2": "static/media/pkmnems-webfont.4e159501.woff2",
+  "static/media/pkmnfl-webfont.woff": "static/media/pkmnfl-webfont.2f0f284c.woff",
+  "static/media/pkmnfl-webfont.woff2": "static/media/pkmnfl-webfont.2bf6bb69.woff2",
+  "static/media/pkmnrs-webfont.woff": "static/media/pkmnrs-webfont.88f97b02.woff",
+  "static/media/pkmnrs-webfont.woff2": "static/media/pkmnrs-webfont.3652aaa0.woff2",
+  "static/media/pkmnrsi-webfont.woff": "static/media/pkmnrsi-webfont.b887d1fc.woff",
+  "static/media/pkmnrsi-webfont.woff2": "static/media/pkmnrsi-webfont.da88738b.woff2"
 }
