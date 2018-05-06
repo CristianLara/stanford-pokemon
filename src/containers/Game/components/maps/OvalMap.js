@@ -8,6 +8,7 @@ class OvalMap extends Map {
   constructor(props) {
     super(props);
 
+    this.name = 'Oval';
     this.addPaths = this.addPaths.bind(this);
     this.addTrees = this.addTrees.bind(this);
     this.transitions = {

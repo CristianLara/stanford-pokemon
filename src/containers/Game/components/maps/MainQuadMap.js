@@ -10,6 +10,7 @@ class MainQuadMap extends Map {
     super(props);
     this.ground = Brick;
 
+    this.name = 'Main Quad';
     this.addWalls = this.addWalls.bind(this);
     this.addMemchu = this.addMemchu.bind(this);
     this.addTrees = this.addTrees.bind(this);

@@ -6,6 +6,8 @@ import MemorialCourtMap from './MemorialCourtMap';
 class RandomMap extends Map {
   constructor(props) {
     super(props);
+
+    this.name = 'Random';
     this.transitions = {
       left: MemorialCourtMap,
     };

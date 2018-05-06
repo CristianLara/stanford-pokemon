@@ -13,6 +13,7 @@ class MemorialCourtMap extends Map {
   constructor(props) {
     super(props);
 
+    this.name = 'Memorial Court';
     this.addPaths = this.addPaths.bind(this);
     this.addWalls = this.addWalls.bind(this);
     this.addStatues = this.addStatues.bind(this);

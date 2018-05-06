@@ -1,5 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
+import LocationBar from '../LocationBar';
 import Grass from '../tiles/Grass';
 import Path from '../tiles/Path';
 import Road from '../tiles/Road';
@@ -13,6 +14,8 @@ class Map extends React.Component {
       width: window.innerWidth,
     }
 
+    this.name = 'Stanford';
+    this.type = 'Route_1';
     this.grid = []; // three
     this.gridRefs = [];
     this.map = {}
@@ -38,6 +41,7 @@ class Map extends React.Component {
     this.addShape = this.addShape.bind(this);
     this.toggleHD = this.toggleHD.bind(this);
     this.formatRows = this.formatRows.bind(this);
+    this.showName = this.showName.bind(this);
   }
 
   toggleHD(hd) {
@@ -265,9 +269,16 @@ class Map extends React.Component {
     }
   }
 
+  showName() {
+
+  }
+
   render() {
     return (
-      [this.grid]
+      <div>
+        <LocationBar location={this.name} type={this.type}/>
+        {[this.grid]}
+      </div>
     );
   }
 

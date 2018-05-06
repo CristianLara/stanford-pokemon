@@ -11,6 +11,7 @@ class HooverTowerMap extends Map {
   constructor(props) {
     super(props);
 
+    this.name = 'Hoover Tower';
     this.addPaths = this.addPaths.bind(this);
     this.addTower = this.addTower.bind(this);
     this.addTrees = this.addTrees.bind(this);
