@@ -1,5 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
+import HooverTowerMap from './HooverTowerMap';
 import LocationBar from '../LocationBar';
 import Grass from '../tiles/Grass';
 import Path from '../tiles/Path';
@@ -263,8 +264,11 @@ class Map extends React.Component {
   }
 
   transport(position) {
-    const { edge, newPosition } = this.detectEdge(this.props.spritePosition, position);
+    var { edge, newPosition } = this.detectEdge(this.props.spritePosition, position);
     if (edge && (edge in this.transitions)) {
+      if (this.transitions[edge] === HooverTowerMap) {
+        newPosition.y = Math.floor(this.numTilesY/3) * 2;
+      }
       this.props.updateMap(this.transitions[edge], newPosition);
     }
   }
