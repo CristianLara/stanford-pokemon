@@ -42,7 +42,6 @@ class Map extends React.Component {
     this.addShape = this.addShape.bind(this);
     this.toggleHD = this.toggleHD.bind(this);
     this.formatRows = this.formatRows.bind(this);
-    this.showName = this.showName.bind(this);
   }
 
   toggleHD(hd) {
@@ -267,14 +266,11 @@ class Map extends React.Component {
     var { edge, newPosition } = this.detectEdge(this.props.spritePosition, position);
     if (edge && (edge in this.transitions)) {
       if (this.transitions[edge] === HooverTowerMap) {
+        // make sure not to spawn in tree
         newPosition.y = Math.floor(this.numTilesY/3) * 2;
       }
       this.props.updateMap(this.transitions[edge], newPosition);
     }
-  }
-
-  showName() {
-
   }
 
   render() {

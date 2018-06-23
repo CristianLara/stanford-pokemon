@@ -21,6 +21,7 @@ class Game extends React.Component {
     this.updatePosition = this.updatePosition.bind(this);
     this.toggleHD = this.toggleHD.bind(this);
     this.updateMap = this.updateMap.bind(this);
+    this.allowPlayerAnimation = this.allowPlayerAnimation.bind(this);
     this.isValidPosition = this.isValidPosition.bind(this);
 
     // document.addEventListener("click", this.toggleHD);
@@ -33,7 +34,12 @@ class Game extends React.Component {
   }
 
   updateMap(newMap, newPosition) {
+      if (this.player) this.player.preventAnimation();
       this.setState({ Map: newMap, spritePosition: newPosition });
+  }
+
+  allowPlayerAnimation() {
+    if (this.player) this.player.allowAnimation();
   }
 
   updatePosition(newPosition) {
@@ -58,6 +64,7 @@ class Game extends React.Component {
     return (
       <div>
         <Player
+          ref={ (instance) => this.player = instance }
           position={spritePosition}
           isValid={this.isValidPosition}
           updatePosition={this.updatePosition}
@@ -65,6 +72,7 @@ class Game extends React.Component {
         <Map
           ref={ (instance) => this.map = instance }
           spritePosition={spritePosition}
+          allowSpriteAnimation={this.allowPlayerAnimation}
           updateMap={this.updateMap}
           hd={this.hd}
         />

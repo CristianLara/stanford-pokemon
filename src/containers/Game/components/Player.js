@@ -6,7 +6,7 @@ const Sprite = Styled.img`
   position: absolute;
   left: ${(props) => props.x}px;
   top: ${(props) => props.y}px;
-  transition: all 0.3s linear;
+  transition: ${(props) => props.animate ? 'all 0.3s linear' : ''};
   z-index: 10;
 `;
 
@@ -27,7 +27,18 @@ class Player extends React.Component {
       step: 0,
     }
 
+    this.animate = true;
+    this.preventAnimation = this.preventAnimation.bind(this);
+    this.allowAnimation = this.allowAnimation.bind(this);
     this.walk = this.walk.bind(this);
+  }
+
+  preventAnimation() {
+    this.animate = false;
+  }
+
+  allowAnimation() {
+    this.animate = true;
   }
 
   componentWillMount() {
@@ -42,9 +53,11 @@ class Player extends React.Component {
   }
 
   walk(event) {
+    // if (!this.animate) return;
     let { direction, step } = this.state;
     var gridPosition = { x: this.props.position.x, y: this.props.position.y };
     const isValid = this.props.isValid;
+    this.animate = true;
 
     if (Object.values(keyMap).includes(event.which)) {
       step = (step + 1) % 9;
@@ -99,7 +112,7 @@ class Player extends React.Component {
     const x = 4 + gridPosition.x * stepSize;
     const y = -16 + gridPosition.y * stepSize;
     return (
-      <Sprite src={spriteSource} x={x} y={y}></Sprite>
+      <Sprite src={spriteSource} animate={this.animate} x={x} y={y}></Sprite>
     );
   }
 
