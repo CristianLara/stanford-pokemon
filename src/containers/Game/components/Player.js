@@ -97,11 +97,14 @@ class Player extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { step } = this.state;
+    const { step, direction } = this.state;
     if (step !== 0) {
+      var stepLimit = 9;
+      // fix weird skipping when walking left or right
+      if (direction === 'left' || direction === 'right') stepLimit = 8;
       setTimeout(() => {
-          this.setState({ step: (step + 1) % 9 });
-      }, 40);
+          this.setState({ step: (step + 1) % stepLimit });
+      }, 50);
     }
   }
 
