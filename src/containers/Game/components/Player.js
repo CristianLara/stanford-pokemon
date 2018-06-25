@@ -27,10 +27,13 @@ class Player extends React.Component {
       step: 0,
     }
 
+    this.run = false;
     this.animate = true;
     this.preventAnimation = this.preventAnimation.bind(this);
     this.allowAnimation = this.allowAnimation.bind(this);
     this.walk = this.walk.bind(this);
+    this.enableRun = this.enableRun.bind(this);
+    this.disableRun = this.disableRun.bind(this);
   }
 
   preventAnimation() {
@@ -42,8 +45,18 @@ class Player extends React.Component {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", _.throttle(this.walk, 200));
     document.addEventListener("keydown", this.preventScroll);
+    document.addEventListener("keydown", _.throttle(this.walk, 200));
+    document.addEventListener("keydown", this.enableRun);
+    document.addEventListener("keyup", this.disableRun);
+  }
+
+  enableRun(event) {
+    if (event.which === 88) this.run = true;
+  }
+
+  disableRun(event) {
+    if (event.which === 88) this.run = false;
   }
 
   preventScroll(event) {
@@ -58,6 +71,8 @@ class Player extends React.Component {
     var gridPosition = { x: this.props.position.x, y: this.props.position.y };
     const isValid = this.props.isValid;
     this.animate = true;
+    var numSteps = 1;
+    if (this.run) numSteps += 1;
 
     if (Object.values(keyMap).includes(event.which)) {
       step = (step + 1) % 9;
@@ -67,25 +82,41 @@ class Player extends React.Component {
       case keyMap.left:
         direction = 'left';
         if (isValid(gridPosition.y, gridPosition.x-1)) {
-          gridPosition.x -= 1;
+          if (isValid(gridPosition.y, gridPosition.x-numSteps)) {
+            gridPosition.x -= numSteps;
+          } else {
+            gridPosition.x -= 1;
+          }
         }
         break;
       case keyMap.up:
         direction = 'up';
         if (isValid(gridPosition.y-1, gridPosition.x)) {
-          gridPosition.y -= 1;
+          if (isValid(gridPosition.y-numSteps, gridPosition.x)) {
+            gridPosition.y -= numSteps;
+          } else {
+            gridPosition.y -= 1;
+          }
         }
         break;
       case keyMap.right:
         direction = 'right';
         if (isValid(gridPosition.y, gridPosition.x+1)) {
-          gridPosition.x += 1;
+          if (isValid(gridPosition.y, gridPosition.x+numSteps)) {
+            gridPosition.x += numSteps;
+          } else {
+            gridPosition.x += 1;
+          }
         }
         break;
       case keyMap.down:
         direction = 'down';
         if (isValid(gridPosition.y+1, gridPosition.x)) {
-          gridPosition.y += 1;
+          if (isValid(gridPosition.y+numSteps, gridPosition.x)) {
+            gridPosition.y += numSteps;
+          } else {
+            gridPosition.y += 1;
+          }
         }
         break;
       default:
