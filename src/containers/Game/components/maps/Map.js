@@ -19,7 +19,9 @@ class Map extends React.Component {
     this.type = 'Route_1';
     this.grid = []; // three
     this.gridRefs = [];
-    this.map = {}
+    this.map = {};
+    this.animatedTiles = {};
+    this.animationTimers = {};
     this.hd = false;
     this.ground = Grass;
     this.tileSize = 36;
@@ -42,6 +44,7 @@ class Map extends React.Component {
     this.addShape = this.addShape.bind(this);
     this.toggleHD = this.toggleHD.bind(this);
     this.formatRows = this.formatRows.bind(this);
+    this.tileCreatedCallback = this.tileCreatedCallback.bind(this);
   }
 
   toggleHD(hd) {
@@ -141,9 +144,29 @@ class Map extends React.Component {
           <Tile
             position={position}
             hd={this.props.hd}
-            ref={ (inst) => this.gridRefs[startY + y][startX + x] = inst }
+            ref={ (inst) => this.tileCreatedCallback(Tile, startY + y, startX + x, inst) }
           />
         );
+      }
+    }
+  }
+
+  tileCreatedCallback(Tile, y, x, inst) {
+    this.gridRefs[y][x] = inst;
+    if (Tile.animated) {
+      const rate = Tile.rate;
+      if (!this.animatedTiles[rate]) this.animatedTiles[rate] = [];
+      this.animatedTiles[rate].push(inst);
+      if (!this.animationTimers[rate]) {
+        const timer = setInterval(() => {
+          // TODO: MIGHT NEED TO SCOPE RATE VAR
+          for (let i = 0; i < this.animatedTiles[rate].length; i++) {
+            if (this.animatedTiles[rate][i]) {
+              this.animatedTiles[rate][i].animate();
+            }
+          }
+        }, rate, this);
+        this.animationTimers[rate] = timer;
       }
     }
   }
@@ -207,7 +230,7 @@ class Map extends React.Component {
             <Tile
               key={startX + x}
               hd={this.props.hd}
-              ref={ (inst) => this.gridRefs[startY + y][startX + x] = inst }
+              ref={ (inst) => this.tileCreatedCallback(Tile, startY + y, startX + x, inst) }
             />
           );
         }
@@ -270,6 +293,14 @@ class Map extends React.Component {
         newPosition.y = Math.floor(this.numTilesY/3) * 2;
       }
       this.props.updateMap(this.transitions[edge], newPosition);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    const timers = Object.values(this.animationTimers)
+    for (var i = 0; i < timers.length; i++) {
+      clearInterval(timers[i]);
     }
   }
 

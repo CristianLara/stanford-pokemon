@@ -29,6 +29,9 @@ class Tile extends React.Component {
     `;
   }
 
+  static animated = false;
+  static rate = 250;
+
   setDepth(depth) {
     this.setState({ visible: depth });
   }
@@ -69,17 +72,9 @@ class Tile extends React.Component {
     }
   }
 
-  componentDidMount() {
-    if (this.animated) {
-      this.timer = setInterval(() => {
-          const { step } = this.state;
-          this.setState({ step: (step + 1) % this.steps });
-      }, this.rate, this);
-    }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
+  animate() {
+    const { step } = this.state;
+    this.setState({ step: (step + 1) % this.steps });
   }
 
 }
