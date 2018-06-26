@@ -6,7 +6,7 @@ const Sprite = Styled.img`
   position: absolute;
   left: ${(props) => props.x}px;
   top: ${(props) => props.y}px;
-  transition: ${(props) => props.animate ? 'all 0.3s linear' : ''};
+  transition: ${(props) => props.animate ? 'all 0.24s linear' : ''};
   z-index: 10;
 `;
 
@@ -46,7 +46,7 @@ class Player extends React.Component {
 
   componentWillMount() {
     document.addEventListener("keydown", this.preventScroll);
-    document.addEventListener("keydown", _.throttle(this.walk, 200));
+    document.addEventListener("keydown", _.throttle(this.walk, 240));
     document.addEventListener("keydown", this.enableRun);
     document.addEventListener("keyup", this.disableRun);
   }
@@ -66,7 +66,6 @@ class Player extends React.Component {
   }
 
   walk(event) {
-    // if (!this.animate) return;
     let { direction, step } = this.state;
     var gridPosition = { x: this.props.position.x, y: this.props.position.y };
     const isValid = this.props.isValid;
@@ -75,7 +74,7 @@ class Player extends React.Component {
     if (this.run) numSteps += 1;
 
     if (Object.values(keyMap).includes(event.which)) {
-      step = (step + 1) % 9;
+      step = 1;
     }
 
     switch(event.which) {
@@ -131,11 +130,10 @@ class Player extends React.Component {
     const { step, direction } = this.state;
     if (step !== 0) {
       var stepLimit = 9;
-      // fix weird skipping when walking left or right
-      if (direction === 'left' || direction === 'right') stepLimit = 8;
+      stepLimit = 8;
       setTimeout(() => {
           this.setState({ step: (step + 1) % stepLimit });
-      }, 50);
+      }, 30);
     }
   }
 
