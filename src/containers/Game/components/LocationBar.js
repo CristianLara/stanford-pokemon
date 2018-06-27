@@ -34,9 +34,9 @@ class LocationBar extends React.Component {
   }
 
   show() {
-    setTimeout(() => {
+    this.timer = setTimeout(() => {
       this.setState({y: 10},
-        () => setTimeout(() => {
+        () => this.timer = setTimeout(() => {
           this.setState({ y: -100 });
       }, 4000));
     }, 1000)
@@ -49,6 +49,10 @@ class LocationBar extends React.Component {
       //     this.setState({ step: (step + 1) % 9 });
       // }, 40);
     // }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   }
 
   render() {
