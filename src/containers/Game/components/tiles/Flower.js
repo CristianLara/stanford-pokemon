@@ -10,8 +10,6 @@ class Flower extends Tile {
     this.steps = 5;
   }
 
-  static animated = true;
-
 }
 
 export default Flower;

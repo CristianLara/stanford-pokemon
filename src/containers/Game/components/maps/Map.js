@@ -144,17 +144,17 @@ class Map extends React.Component {
           <Tile
             position={position}
             hd={this.props.hd}
-            ref={ (inst) => this.tileCreatedCallback(Tile, startY + y, startX + x, inst) }
+            ref={ (inst) => this.tileCreatedCallback(startY + y, startX + x, inst) }
           />
         );
       }
     }
   }
 
-  tileCreatedCallback(Tile, y, x, inst) {
+  tileCreatedCallback(y, x, inst) {
     this.gridRefs[y][x] = inst;
-    if (Tile.animated) {
-      const rate = Tile.rate;
+    if (inst && inst.animated) {
+      const rate = inst.rate;
       if (!this.animatedTiles[rate]) this.animatedTiles[rate] = [];
       this.animatedTiles[rate].push(inst);
       if (!this.animationTimers[rate]) {
@@ -230,7 +230,7 @@ class Map extends React.Component {
             <Tile
               key={startX + x}
               hd={this.props.hd}
-              ref={ (inst) => this.tileCreatedCallback(Tile, startY + y, startX + x, inst) }
+              ref={ (inst) => this.tileCreatedCallback(startY + y, startX + x, inst) }
             />
           );
         }

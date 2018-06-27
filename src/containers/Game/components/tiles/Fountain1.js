@@ -14,8 +14,6 @@ class Fountain1 extends Tile {
 
   static height = 5;
   static width = 5;
-  static animated = true;
-  static rate = 40;
 }
 
 export default Fountain1;

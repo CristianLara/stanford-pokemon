@@ -29,9 +29,6 @@ class Tile extends React.Component {
     `;
   }
 
-  static animated = false;
-  static rate = 250;
-
   setDepth(depth) {
     this.setState({ visible: depth });
   }
