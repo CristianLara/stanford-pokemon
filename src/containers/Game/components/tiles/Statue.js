@@ -5,12 +5,12 @@ class Statue extends Tile {
     super(props);
 
     this.state.type = 'statue';
-    this.walkable = false;
     this.animated = false;
   }
 
   static height = 2;
   static width = 1;
+  static blockingHeight = 1;
 }
 
 export default Statue;

@@ -47,7 +47,7 @@ class OvalMap extends Map {
 
     posY.forEach((y) => {
       posX.forEach((x) => {
-        this.addTile(Tree, x, y, Tree.width, Tree.height);
+        this.addObject(Tree, x, y, Tree.width, Tree.height);
       });
     });
   }

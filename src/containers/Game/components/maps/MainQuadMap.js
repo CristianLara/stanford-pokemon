@@ -36,7 +36,7 @@ class MainQuadMap extends Map {
       const ypos = Math.floor(this.numTilesY / 3) * (1 + y);
       for (let x = 0; x < 4; x++) {
         const xpos = Math.floor(this.numTilesX / 4) * (x) + Math.floor(this.numTilesX / 10);
-        this.addTile(TreeTropical, xpos, ypos, TreeTropical.width, TreeTropical.height);
+        this.addObject(TreeTropical, xpos, ypos);
       }
     }
 
