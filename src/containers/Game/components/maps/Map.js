@@ -151,12 +151,12 @@ class Map extends React.Component {
     }
   }
 
-  tileCreatedCallback(y, x, inst) {
-    this.gridRefs[y][x] = inst;
-    if (inst && inst.animated) {
-      const rate = inst.rate;
+  tileCreatedCallback(y, x, tile) {
+    this.gridRefs[y][x] = tile;
+    if (tile && inst.animated) {
+      const rate = tile.rate;
       if (!this.animatedTiles[rate]) this.animatedTiles[rate] = [];
-      this.animatedTiles[rate].push(inst);
+      this.animatedTiles[rate].push(tile);
       if (!this.animationTimers[rate]) {
         const timer = setInterval(() => {
           // TODO: MIGHT NEED TO SCOPE RATE VAR
