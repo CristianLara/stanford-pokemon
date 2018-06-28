@@ -41,6 +41,7 @@ class Map extends React.Component {
     this.addMapFeatures = this.addMapFeatures.bind(this);
     this.fillInGround = this.fillInGround.bind(this);
     this.addTile = this.addTile.bind(this);
+    this.addObject = this.addObject.bind(this);
     this.addShape = this.addShape.bind(this);
     this.toggleHD = this.toggleHD.bind(this);
     this.formatRows = this.formatRows.bind(this);
@@ -119,6 +120,7 @@ class Map extends React.Component {
     }
   }
 
+  // add tiles making up objects with non-distinct sizes
   addTile(Tile, startX, startY, width, height, cutoff) {
     for (let y = 0; y < height; y++) {
       if (startY + y < 0 || startY + y >= this.numTilesY) continue;
@@ -151,9 +153,34 @@ class Map extends React.Component {
     }
   }
 
+  // add object with defined height and pathWidth
+  addObject(Tile, startX, startY) {
+    const height = Tile.height;
+    const width = Tile.width;
+    for (let y = 0; y < height; y++) {
+      if (startY + y < 0 || startY + y >= this.numTilesY) continue;
+      if (!this.grid[startY + y]) this.grid[startY + y] = [];
+      if (!this.gridRefs[startY + y]) this.gridRefs[startY + y] = [];
+      const ypos = this.getPositionLabel(Tile.height, height, y);
+
+      for (let x = 0; x < width; x++) {
+        if (startX + x < 0 || startX + x >= this.numTilesX) continue;
+        const xpos = this.getPositionLabel(Tile.width, width, x);
+        var position = this.combinePositions(Tile, ypos, xpos, startY, y, startX, x, height, width);
+        this.grid[startY + y][startX + x].push(
+          <Tile
+            position={position}
+            hd={this.props.hd}
+            ref={ (inst) => this.tileCreatedCallback(startY + y, startX + x, inst) }
+          />
+        );
+      }
+    }
+  }
+
   tileCreatedCallback(y, x, tile) {
     this.gridRefs[y][x] = tile;
-    if (tile && inst.animated) {
+    if (tile && tile.animated) {
       const rate = tile.rate;
       if (!this.animatedTiles[rate]) this.animatedTiles[rate] = [];
       this.animatedTiles[rate].push(tile);

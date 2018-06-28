@@ -43,16 +43,14 @@ class MemorialCourtMap extends Map {
   }
 
   addStatues(x, y) {
-    const height = 2;
-    const width = 1;
     const startY1 = y + 1;
     const startX1 = x + 1;
-    this.addTile(Statue, startX1, startY1, width, height);
-    this.addTile(Statue, startX1+1, startY1, width, height);
-    this.addTile(Statue, startX1+2, startY1, width, height);
-    this.addTile(Statue, startX1, startY1+2, width, height);
-    this.addTile(Statue, startX1+1, startY1+2, width, height);
-    this.addTile(Statue, startX1+2, startY1+2, width, height);
+    this.addObject(Statue, startX1, startY1);
+    this.addObject(Statue, startX1+1, startY1);
+    this.addObject(Statue, startX1+2, startY1);
+    this.addObject(Statue, startX1, startY1+2);
+    this.addObject(Statue, startX1+1, startY1+2);
+    this.addObject(Statue, startX1+2, startY1+2);
   }
 
   addPaths() {

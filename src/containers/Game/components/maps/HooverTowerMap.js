@@ -15,7 +15,6 @@ class HooverTowerMap extends Map {
     this.addPaths = this.addPaths.bind(this);
     this.addTower = this.addTower.bind(this);
     this.addTrees = this.addTrees.bind(this);
-    this.addStatues = this.addStatues.bind(this);
     this.transitions = {
       right: MemorialCourtMap,
     };
@@ -30,19 +29,6 @@ class HooverTowerMap extends Map {
   addTower() {
     const x = Math.floor(this.numTilesX / 2) - Math.floor(Tower.width / 2);
     this.addTile(Tower, x, -6, Tower.width, Tower.height);
-  }
-
-  addStatues(x, y) {
-    const height = 2;
-    const width = 1;
-    const startY1 = y + 1;
-    const startX1 = x + 1;
-    this.addTile(Statue, startX1, startY1, width, height);
-    this.addTile(Statue, startX1+1, startY1, width, height);
-    this.addTile(Statue, startX1+2, startY1, width, height);
-    this.addTile(Statue, startX1, startY1+2, width, height);
-    this.addTile(Statue, startX1+1, startY1+2, width, height);
-    this.addTile(Statue, startX1+2, startY1+2, width, height);
   }
 
   addPaths() {
@@ -65,7 +51,7 @@ class HooverTowerMap extends Map {
     this.addTile(Road, centerX, centerY, centerWidth, centerHeight);
 
     // adding fountain
-    this.addTile(Fountain, centerX + 3, centerY + 2, Fountain.width, Fountain.height);
+    this.addObject(Fountain, centerX + 3, centerY + 2);
   }
 
   addTrees() {
@@ -78,30 +64,30 @@ class HooverTowerMap extends Map {
     // sides
     for (let x = 0; x < 10; x++) {
       if (startX2 + Tree.width * x > this.numTilesX) break;
-      this.addTile(Tree, startX2 + Tree.width * x, yTop, Tree.width, Tree.height);
-      this.addTile(Tree, startX2 + Tree.width * x, yBottom, Tree.width, Tree.height);
+      this.addObject(Tree, startX2 + Tree.width * x, yTop);
+      this.addObject(Tree, startX2 + Tree.width * x, yBottom);
     }
     for (let x = 0; x < 10; x++) {
       if (startX1 - Tree.width * x < -Tree.width) break;
-      this.addTile(Tree, startX1 - Tree.width * x, yTop, Tree.width, Tree.height);
-      this.addTile(Tree, startX1 - Tree.width * x, yBottom, Tree.width, Tree.height);
+      this.addObject(Tree, startX1 - Tree.width * x, yTop);
+      this.addObject(Tree, startX1 - Tree.width * x, yBottom);
     }
 
     // bottom
     for (let x = 0; x < 4; x++) {
-      this.addTile(Tree, startX1 + 3 + (Tree.width + 1) * x, this.numTilesY - 3, Tree.width, Tree.height);
+      this.addObject(Tree, startX1 + 3 + (Tree.width + 1) * x, this.numTilesY - 3);
     }
 
     // top
-    this.addTile(Tree, startX1 + 3, yTop - 2, Tree.width, Tree.height);
-    this.addTile(Tree, startX2 - 3, yTop - 2, Tree.width, Tree.height);
+    this.addObject(Tree, startX1 + 3, yTop - 2);
+    this.addObject(Tree, startX2 - 3, yTop - 2);
 
     // add lights
-    this.addTile(Streetlight, startX1 + 4, yTop + 2, Streetlight.width, Streetlight.height);
-    this.addTile(Streetlight, startX1 + 4, yBottom, Streetlight.width, Streetlight.height);
+    this.addObject(Streetlight, startX1 + 4, yTop + 2);
+    this.addObject(Streetlight, startX1 + 4, yBottom);
 
-    this.addTile(Streetlight, startX2 - 2, yTop + 2, Streetlight.width, Streetlight.height);
-    this.addTile(Streetlight, startX2 - 2, yBottom, Streetlight.width, Streetlight.height);
+    this.addObject(Streetlight, startX2 - 2, yTop + 2);
+    this.addObject(Streetlight, startX2 - 2, yBottom);
   }
 
 }
