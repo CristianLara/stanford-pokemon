@@ -175,6 +175,7 @@ class Map extends React.Component {
           <Tile
             position={position}
             hd={this.props.hd}
+            walkable={startY + y < startY + Tile.blockingHeight}
             ref={ (inst) => this.tileCreatedCallback(startY + y, startX + x, inst) }
           />
         );

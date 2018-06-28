@@ -8,7 +8,8 @@ class Tile extends React.Component {
     this.state = {
       step: 0,
       visible: false,
-      type: ''
+      type: '',
+      depth: false
     }
 
     this.walkable = true;
@@ -18,6 +19,12 @@ class Tile extends React.Component {
     if (props.position) {
       this.state.position = props.position;
     }
+    if (props.walkable) {
+      this.walkable = true;
+      this.state.depth = true;
+    } else if (props.walkable === false) {
+      this.walkable = false;
+    }
     this.setDepth = this.setDepth.bind(this);
 
     this.tileSize = 36;
@@ -26,6 +33,7 @@ class Tile extends React.Component {
       height: ${this.tileSize}px;
       width: ${this.tileSize}px;
       left: 0px;
+      z-index: ${(props) => props.depth ? 20 : 'auto' };
     `;
   }
 
@@ -43,7 +51,7 @@ class Tile extends React.Component {
   }
 
   render() {
-    const { step, type, position } = this.state;
+    const { step, type, position, depth } = this.state;
     if (!type) return null;
     var tile = '';
     if (this.animated) {
@@ -59,7 +67,7 @@ class Tile extends React.Component {
     }
 
     return (
-      <this.StyledTile src={tile}/>
+      <this.StyledTile src={tile} depth={depth}/>
     );
   }
 

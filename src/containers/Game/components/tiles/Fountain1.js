@@ -5,7 +5,6 @@ class Fountain1 extends Tile {
     super(props);
 
     this.state.type = 'fountain1';
-    this.walkable = false;
     this.animated = true;
     this.steps = 19;
     this.large = true;
@@ -14,6 +13,7 @@ class Fountain1 extends Tile {
 
   static height = 5;
   static width = 5;
+  static blockingHeight = 1;
 }
 
 export default Fountain1;

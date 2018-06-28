@@ -5,12 +5,12 @@ class Tower extends Tile {
     super(props);
 
     this.state.type = 'tower';
-    this.walkable = false;
     this.animated = false;
   }
 
   static height = 16;
   static width = 7;
+  static blockingHeight = 10;
 }
 
 export default Tower;

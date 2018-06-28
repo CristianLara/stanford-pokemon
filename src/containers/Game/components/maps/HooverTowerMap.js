@@ -28,7 +28,7 @@ class HooverTowerMap extends Map {
 
   addTower() {
     const x = Math.floor(this.numTilesX / 2) - Math.floor(Tower.width / 2);
-    this.addTile(Tower, x, -6, Tower.width, Tower.height);
+    this.addObject(Tower, x, -6);
   }
 
   addPaths() {

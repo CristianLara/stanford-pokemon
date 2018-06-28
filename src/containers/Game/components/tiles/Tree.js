@@ -5,12 +5,12 @@ class Tree extends Tile {
     super(props);
 
     this.state.type = 'tree';
-    this.walkable = false;
     this.animated = false;
   }
 
   static height = 4;
   static width = 3;
+  static blockingHeight = 2;
 }
 
 export default Tree;
