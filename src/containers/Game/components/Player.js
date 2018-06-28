@@ -6,7 +6,7 @@ const Sprite = Styled.img`
   position: absolute;
   left: ${(props) => props.x}px;
   top: ${(props) => props.y}px;
-  transition: ${(props) => props.animate ? 'all 0.24s linear' : ''};
+  transition: ${(props) => props.animate ? 'all 0.'+props.speed+'s linear' : ''};
   z-index: 10;
 `;
 
@@ -83,14 +83,10 @@ class Player extends React.Component {
 
   takeStep() {
     if (!this.keyPressed || !this.walking) return;
-    console.log(this.keyPressed);
-    console.log(this.walking);
     let { direction, step } = this.state;
     var gridPosition = { x: this.props.position.x, y: this.props.position.y };
     const isValid = this.props.isValid;
     this.animate = true;
-    var numSteps = 1;
-    if (this.run) numSteps += 1;
     if (this.isArrowKey(this.keyPressed)) {
       step = 1;
     }
@@ -98,41 +94,25 @@ class Player extends React.Component {
       case keyMap.left:
         direction = 'left';
         if (isValid(gridPosition.y, gridPosition.x-1)) {
-          if (isValid(gridPosition.y, gridPosition.x-numSteps)) {
-            gridPosition.x -= numSteps;
-          } else {
-            gridPosition.x -= 1;
-          }
+          gridPosition.x -= 1;
         }
         break;
       case keyMap.up:
         direction = 'up';
         if (isValid(gridPosition.y-1, gridPosition.x)) {
-          if (isValid(gridPosition.y-numSteps, gridPosition.x)) {
-            gridPosition.y -= numSteps;
-          } else {
-            gridPosition.y -= 1;
-          }
+          gridPosition.y -= 1;
         }
         break;
       case keyMap.right:
         direction = 'right';
         if (isValid(gridPosition.y, gridPosition.x+1)) {
-          if (isValid(gridPosition.y, gridPosition.x+numSteps)) {
-            gridPosition.x += numSteps;
-          } else {
-            gridPosition.x += 1;
-          }
+          gridPosition.x += 1;
         }
         break;
       case keyMap.down:
         direction = 'down';
         if (isValid(gridPosition.y+1, gridPosition.x)) {
-          if (isValid(gridPosition.y+numSteps, gridPosition.x)) {
-            gridPosition.y += numSteps;
-          } else {
-            gridPosition.y += 1;
-          }
+          gridPosition.y += 1;
         }
         break;
       default:
@@ -141,14 +121,16 @@ class Player extends React.Component {
 
     this.props.updatePosition(gridPosition);
     this.setState({ direction: direction, step: step });
-    this.animationTimer = setTimeout(() => this.takeStep(), 240);
+
+    const speed = this.run ? 120 : 240;
+    this.animationTimer = setTimeout(() => this.takeStep(), speed);
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { step, direction } = this.state;
     if (step !== 0) {
-      var stepLimit = 9;
-      stepLimit = 8;
+      const stepLimit = 8;
+      const speed = this.run ? 15 : 30;
       setTimeout(() => {
           this.setState({ step: (step + 1) % stepLimit });
       }, 30);
@@ -162,7 +144,7 @@ class Player extends React.Component {
     const x = 4 + gridPosition.x * stepSize;
     const y = -16 + gridPosition.y * stepSize;
     return (
-      <Sprite src={spriteSource} animate={this.animate} x={x} y={y}></Sprite>
+      <Sprite src={spriteSource} animate={this.animate} speed={this.run ? 12 : 24} x={x} y={y}></Sprite>
     );
   }
 
