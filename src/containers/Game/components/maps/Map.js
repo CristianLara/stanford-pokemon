@@ -15,20 +15,23 @@ class Map extends React.Component {
       width: window.innerWidth,
     }
 
-    this.name = 'Stanford';
-    this.type = 'Route_1';
-    this.grid = []; // three
-    this.gridRefs = [];
-    this.map = {};
-    this.animatedTiles = {};
-    this.animationTimers = {};
-    this.hd = false;
-    this.ground = Grass;
-    this.tileSize = 36;
+    this.name = 'Stanford';    // text on the locationbar
+    this.type = 'Route_1';     // changes the locationbar style
+    this.grid = [];            // grid tiles to be rendered
+    this.gridRefs = [];        // grid of references to tile instances
+    this.animatedTiles = {};   // obj of animated tiles grouped by animate rate
+    this.animationTimers = {}; // obj of timers controlling animation
+    this.hd = false;           // controls the style of tile rendering
+    this.ground = Grass;       // default ground tile to fill empty space
+    this.tileSize = 36;        // dimension of each square tile
+
+    // controls size and spacing of rows of tiles
     this.row = Styled.div`
       height: ${this.tileSize}px;
       width: max-content;
     `;
+
+    // controls size and spacing of each tile
     this.tile = Styled.div`
       position: relative;
       display: inline-block;
@@ -36,6 +39,7 @@ class Map extends React.Component {
       width: ${this.tileSize}px;
     `;
 
+    // scoping <this> to component functions
     this.updateTileDepth = this.updateTileDepth.bind(this);
     this.transport = this.transport.bind(this);
     this.addMapFeatures = this.addMapFeatures.bind(this);
