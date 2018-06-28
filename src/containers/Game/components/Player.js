@@ -29,11 +29,15 @@ class Player extends React.Component {
 
     this.run = false;
     this.animate = true;
+    this.keyPressed = '';
+    this.animationTimer = null;
+    this.walking = false;
     this.preventAnimation = this.preventAnimation.bind(this);
     this.allowAnimation = this.allowAnimation.bind(this);
-    this.walk = this.walk.bind(this);
-    this.enableRun = this.enableRun.bind(this);
-    this.disableRun = this.disableRun.bind(this);
+    this.takeStep = this.takeStep.bind(this);
+    this.handleKeydown = this.handleKeydown.bind(this);
+    this.handleKeyup = this.handleKeyup.bind(this);
+    this.isArrowKey = this.isArrowKey.bind(this);
   }
 
   preventAnimation() {
@@ -45,39 +49,52 @@ class Player extends React.Component {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", this.preventScroll);
-    document.addEventListener("keydown", _.throttle(this.walk, 240));
-    document.addEventListener("keydown", this.enableRun);
-    document.addEventListener("keyup", this.disableRun);
+    document.addEventListener("keydown", this.handleKeydown);
+    document.addEventListener("keyup", this.handleKeyup);
   }
 
-  enableRun(event) {
-    if (event.which === 88) this.run = true;
-  }
-
-  disableRun(event) {
-    if (event.which === 88) this.run = false;
-  }
-
-  preventScroll(event) {
-    if (Object.values(keyMap).includes(event.which)) {
+  handleKeydown(event) {
+    if (event.repeat) return;
+    if (this.isArrowKey(event.which)) {
       event.preventDefault();
+      this.keyPressed = event.which;
+      if (!this.walking) {
+        this.walking = true;
+        this.takeStep();
+      }
+    } else if (event.which === 88) {
+      this.run = true;
     }
   }
 
-  walk(event) {
+  isArrowKey(key) {
+    return Object.values(keyMap).includes(key);
+  }
+
+  handleKeyup(event) {
+    if (event.which === this.keyPressed) {
+      this.keyPressed = '';
+      this.walking = false;
+      clearTimeout(this.animationTimer);
+    } else if (event.which === 88) {
+      this.run = false;
+    }
+  }
+
+  takeStep() {
+    if (!this.keyPressed || !this.walking) return;
+    console.log(this.keyPressed);
+    console.log(this.walking);
     let { direction, step } = this.state;
     var gridPosition = { x: this.props.position.x, y: this.props.position.y };
     const isValid = this.props.isValid;
     this.animate = true;
     var numSteps = 1;
     if (this.run) numSteps += 1;
-
-    if (Object.values(keyMap).includes(event.which)) {
+    if (this.isArrowKey(this.keyPressed)) {
       step = 1;
     }
-
-    switch(event.which) {
+    switch(this.keyPressed) {
       case keyMap.left:
         direction = 'left';
         if (isValid(gridPosition.y, gridPosition.x-1)) {
@@ -124,6 +141,7 @@ class Player extends React.Component {
 
     this.props.updatePosition(gridPosition);
     this.setState({ direction: direction, step: step });
+    this.animationTimer = setTimeout(() => this.takeStep(), 240);
   }
 
   componentDidUpdate(prevProps, prevState) {
