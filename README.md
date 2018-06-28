@@ -1,6 +1,13 @@
-## Stanford Pokemon WIP
+# Stanford Pokemon WIP
 
 Live at [cristianlara.me/stanford-pokemon](http://cristianlara.me/stanford-pokemon)
+
+## Controls
+
+* `← ↑ → ↓`
+  * Character movement
+* `x`
+  * Hold to run
 
 ## Screenshots
 
