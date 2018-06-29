@@ -32,6 +32,7 @@ class Tile extends React.Component {
       position: absolute;
       height: ${this.tileSize}px;
       width: ${this.tileSize}px;
+      vertical-align: initial;
       left: 0px;
       z-index: ${(props) => props.depth ? 20 : 'auto' };
     `;

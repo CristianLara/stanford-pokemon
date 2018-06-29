@@ -7,6 +7,7 @@ const tileSize = 36;
 const StyledGrass = Styled.img`
   height: ${tileSize}px;
   width: ${tileSize}px;
+  vertical-align: initial;
 `;
 
 const Grass3DContainer = Styled.span`
@@ -77,7 +78,7 @@ class Grass extends Tile {
         </Grass3DContainer>
       );
     }
-    
+
     return (
       <StyledGrass src={grassSource}/>
     )
