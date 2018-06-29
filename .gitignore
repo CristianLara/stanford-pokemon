@@ -9,6 +9,9 @@
 # production
 /build
 
+# things i don't own
+/src/sound/music
+
 # misc
 .DS_Store
 .env.local
