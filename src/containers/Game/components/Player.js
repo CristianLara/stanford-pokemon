@@ -10,7 +10,7 @@ const Sprite = Styled.img`
   z-index: 10;
 `;
 
-const keyMap = {
+const ARROWKEYS = {
   left: 37,
   up: 38,
   right: 39,
@@ -68,7 +68,7 @@ class Player extends React.Component {
   }
 
   isArrowKey(key) {
-    return Object.values(keyMap).includes(key);
+    return Object.values(ARROWKEYS).includes(key);
   }
 
   handleKeyup(event) {
@@ -91,25 +91,25 @@ class Player extends React.Component {
       step = 1;
     }
     switch(this.keyPressed) {
-      case keyMap.left:
+      case ARROWKEYS.left:
         direction = 'left';
         if (isValid(gridPosition.y, gridPosition.x-1)) {
           gridPosition.x -= 1;
         }
         break;
-      case keyMap.up:
+      case ARROWKEYS.up:
         direction = 'up';
         if (isValid(gridPosition.y-1, gridPosition.x)) {
           gridPosition.y -= 1;
         }
         break;
-      case keyMap.right:
+      case ARROWKEYS.right:
         direction = 'right';
         if (isValid(gridPosition.y, gridPosition.x+1)) {
           gridPosition.x += 1;
         }
         break;
-      case keyMap.down:
+      case ARROWKEYS.down:
         direction = 'down';
         if (isValid(gridPosition.y+1, gridPosition.x)) {
           gridPosition.y += 1;
