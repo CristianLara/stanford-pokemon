@@ -51,7 +51,6 @@ class ControlsBar extends React.Component {
 
   render() {
     const { sound, values } = this.state;
-    console.log(values);
     const soundGlyph = sound === SOUND.on ? 'volume-up' : 'volume-off';
 
     return (
