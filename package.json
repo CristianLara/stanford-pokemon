@@ -5,6 +5,7 @@
   "homepage": "http://cristianlara.github.io/stanford-pokemon",
   "dependencies": {
     "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
     "react-sound": "^1.2.0",
