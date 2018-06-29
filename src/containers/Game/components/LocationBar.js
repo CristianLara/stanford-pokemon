@@ -6,7 +6,7 @@ const Bar = Styled.div`
   position: fixed;
   top: ${(props) => props.y}px;
   left: 12px;
-  z-index:999;
+  z-index:900;
   transition: all 2s;
 `;
 
@@ -14,7 +14,8 @@ const Title = Styled.h2`
   position: absolute;
   font-family: power_clearregular;
   width: 100%;
-  text-align: middle;
+  margin-top: 17px;
+  font-size: 25px;
 `;
 
 class LocationBar extends React.Component {
@@ -40,15 +41,6 @@ class LocationBar extends React.Component {
           this.setState({ y: -100 });
       }, 4000));
     }, 1000)
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    // const {  } = this.state;
-    // if (step !== 0) {
-      // setTimeout(() => {
-      //     this.setState({ step: (step + 1) % 9 });
-      // }, 40);
-    // }
   }
 
   componentWillUnmount() {
