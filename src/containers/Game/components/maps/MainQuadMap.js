@@ -11,6 +11,7 @@ class MainQuadMap extends Map {
     this.ground = Brick;
 
     this.name = 'Main Quad';
+    this.type = 'City_1';
     this.addWalls = this.addWalls.bind(this);
     this.addMemchu = this.addMemchu.bind(this);
     this.addTrees = this.addTrees.bind(this);
