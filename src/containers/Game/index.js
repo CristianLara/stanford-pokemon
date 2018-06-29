@@ -1,10 +1,16 @@
 import React from 'react';
+import Sound from 'react-sound';
 // import RandomMap from './components/maps/RandomMap'
 // import OvalMap from './components/maps/OvalMap'
 // import MemorialCourtMap from './components/maps/MemorialCourtMap'
 // import MainQuadMap from './components/maps/MainQuadMap';
 import HooverTowerMap from './components/maps/HooverTowerMap';
 import Player from './components/Player';
+
+const SOUND = {
+  none: 0,
+  bump: 1,
+}
 
 class Game extends React.Component {
   constructor(props) {
@@ -13,6 +19,8 @@ class Game extends React.Component {
     this.state = {
       Map: HooverTowerMap,
       spritePosition: {x: 5, y: 5},
+      soundEnabled: false,
+      sound: SOUND.none,
       // hd: true,
     };
 
@@ -20,17 +28,22 @@ class Game extends React.Component {
     this.hd = true;
     this.updatePosition = this.updatePosition.bind(this);
     this.toggleHD = this.toggleHD.bind(this);
+    this.toggleSound = this.toggleSound.bind(this);
     this.updateMap = this.updateMap.bind(this);
     this.allowPlayerAnimation = this.allowPlayerAnimation.bind(this);
     this.isValidPosition = this.isValidPosition.bind(this);
 
-    // document.addEventListener("click", this.toggleHD);
+    document.addEventListener("click", this.toggleSound);
   }
 
   toggleHD() {
     // this.setState({ hd: !this.state.hd });
     this.hd = !this.hd;
     this.map.toggleHD(this.hd);
+  }
+
+  toggleSound() {
+    this.setState({ soundEnabled: !this.state.soundEnabled});
   }
 
   updateMap(newMap, newPosition) {
@@ -54,13 +67,38 @@ class Game extends React.Component {
         width = this.map.gridRefs[0].length;
       }
       if ((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
-        return this.map.gridRefs[y][x].walkable;
+        if (this.map.gridRefs[y][x].walkable) {
+          this.setState({ sound: SOUND.none });
+          return true;
+        } else {
+          this.setState({ sound: SOUND.bump });
+          return false;
+        }
       }
     }
   }
 
   render() {
-    const { spritePosition, Map } = this.state;
+    const { spritePosition, soundEnabled, sound, Map } = this.state;
+    var soundElem = '';
+    var url = '';
+    if (soundEnabled) {
+      if (sound !== SOUND.none) {
+        switch(sound) {
+          case SOUND.bump:
+            url = require(`../../sound/bump.mp3`);
+            break;
+          default:
+            break
+        }
+        soundElem = (
+          <Sound
+            url={require(`../../sound/bump.mp3`)}
+            playStatus={Sound.status.PLAYING}
+          />
+        )
+      }
+    }
     return (
       <div>
         <Player
@@ -76,6 +114,7 @@ class Game extends React.Component {
           updateMap={this.updateMap}
           hd={this.hd}
         />
+        {soundElem}
       </div>
     );
   }
