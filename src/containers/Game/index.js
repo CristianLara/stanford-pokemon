@@ -6,6 +6,7 @@ import Sound from 'react-sound';
 // import MainQuadMap from './components/maps/MainQuadMap';
 import HooverTowerMap from './components/maps/HooverTowerMap';
 import Player from './components/Player';
+import Controls from './components/Controls';
 
 const SOUND = {
   none: 0,
@@ -32,8 +33,6 @@ class Game extends React.Component {
     this.updateMap = this.updateMap.bind(this);
     this.allowPlayerAnimation = this.allowPlayerAnimation.bind(this);
     this.isValidPosition = this.isValidPosition.bind(this);
-
-    document.addEventListener("click", this.toggleSound);
   }
 
   toggleHD() {
@@ -101,6 +100,9 @@ class Game extends React.Component {
     }
     return (
       <div>
+        <Controls
+          toggleSound={this.toggleSound}
+        />
         <Player
           ref={ (instance) => this.player = instance }
           position={spritePosition}
