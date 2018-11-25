@@ -3,7 +3,6 @@ import Road from '../tiles/Road';
 import Tree from '../tiles/Tree';
 import Streetlight from '../tiles/Streetlight';
 import Fountain from '../tiles/Fountain1';
-import Statue from '../tiles/Statue';
 import Map from './Map';
 import MemorialCourtMap from './MemorialCourtMap';
 

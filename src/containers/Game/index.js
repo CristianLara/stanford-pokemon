@@ -102,7 +102,7 @@ class Game extends React.Component {
         }
         soundElem = (
           <Sound
-            url={require(`../../sound/bump.mp3`)}
+            url={url}
             playStatus={Sound.status.PLAYING}
           />
         )

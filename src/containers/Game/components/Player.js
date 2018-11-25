@@ -1,6 +1,5 @@
 import React from 'react';
 import Styled from 'styled-components';
-import _ from 'underscore';
 
 const Sprite = Styled.img`
   position: absolute;
@@ -127,10 +126,11 @@ class Player extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { step, direction } = this.state;
+    const { step } = this.state;
     if (step !== 0) {
       const stepLimit = 8;
-      const speed = this.run ? 15 : 30;
+      // use this to control step animation speed
+      // const speed = this.run ? 15 : 30;
       setTimeout(() => {
           this.setState({ step: (step + 1) % stepLimit });
       }, 30);

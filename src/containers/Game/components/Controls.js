@@ -1,6 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
-import { Button, Glyphicon, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Glyphicon, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import '../../../Fonts/fonts.css';
 
 const Bar = Styled.div`
