@@ -2,6 +2,7 @@ import React from 'react';
 import Styled from 'styled-components';
 import HooverTowerMap from './HooverTowerMap';
 import LocationBar from '../LocationBar';
+import Weather from '../Weather';
 import Grass from '../tiles/Grass';
 import Path from '../tiles/Path';
 import Road from '../tiles/Road';
@@ -340,6 +341,7 @@ class Map extends React.Component {
     return (
       <div>
         <LocationBar location={this.name} type={this.type}/>
+        <Weather/>
         {[this.grid]}
       </div>
     );
