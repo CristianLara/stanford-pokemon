@@ -22,7 +22,6 @@ class Game extends React.Component {
       spritePosition: {x: 5, y: 5},
       soundEnabled: false,
       sound: SOUND.none,
-      musicUrl: require(`../../sound/music/violet_city.mp3`),
       // hd: true,
     };
 
@@ -79,19 +78,10 @@ class Game extends React.Component {
   }
 
   render() {
-    const { spritePosition, soundEnabled, sound, musicUrl, Map } = this.state;
-    var soundElem = '';
-    var musicElem = '';
+    const { spritePosition, soundEnabled, sound, Map } = this.state;
+    var soundElem = null;
     var url = '';
     if (soundEnabled) {
-      musicElem = (
-        <Sound
-          url={musicUrl}
-          playStatus={Sound.status.PLAYING}
-          volume={50}
-          loop
-        />
-      )
       if (sound !== SOUND.none) {
         switch(sound) {
           case SOUND.bump:
@@ -127,7 +117,6 @@ class Game extends React.Component {
           hd={this.hd}
         />
         {soundElem}
-        {musicElem}
       </div>
     );
   }
