@@ -2,7 +2,7 @@
   "name": "stanford-pokemon",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://cristianlara.github.io/stanford-pokemon",
+  "homepage": "https://stanford-pokemon.cristianlara.me",
   "dependencies": {
     "moment": "^2.24.0",
     "react": "^16.2.0",
